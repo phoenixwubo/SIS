@@ -24,9 +24,64 @@ class CoursePlansController extends AppController {
  *
  * @return void
  */
-	public function index() {
+	public function index($department_id=null,$semester_id=null,$course_id=null,$course_type=null,$score_type=null) {
 		$this->CoursePlan->recursive = 0;
 		$this->layout='ajax';
+		if(isset($this->request->query ['department_id']) && !(($this->request->query ['department_id']=='')))
+		{
+			$department_id = $this->request->query ['department_id'];
+		}
+		
+		if(isset($this->request->query ['course_id']) && !($this->request->query ['course_id']=='')){
+			($course_id = $this->request->query ['course_id']);
+		}
+		
+		if(isset($this->request->query ['semester_id'])&& !($this->request->query ['semester_id']=='')){
+			($semester_id = $this->request->query ['semester_id']);
+		}
+		
+		if(isset($this->request->query ['course_type'])&& !($this->request->query ['course_type']=='')){
+			($course_type = $this->request->query ['course_type']);
+		}
+		
+		if(isset($this->request->query ['score_type'])&& !($this->request->query ['score_type']=='')){
+			($course_type = $this->request->query ['score_type']);
+		}
+		
+		$this->CoursePlan->recursive = 0;
+		$this->layout='ajax';
+		if ($department_id == null || $department_id=='null' ) {
+			$condition = array (
+// 					1 => 1
+			);
+		} else {
+		
+			App::import ( 'Controller', 'Departments' );
+			$DepartmentsController = new DepartmentsController ();
+			$depts = $DepartmentsController->getChildren ( $department_id );
+			$dept_count=count($depts);
+				
+			if($dept_count==1){
+				$parent_dept=$DepartmentsController->getparent($department_id);
+				$parent_dept_id=$parent_dept['Department']['id'];
+				$department_id=$parent_dept_id;
+			}
+			$condition = array (
+					'conditions'=>array(
+							'department_id' => $department_id
+					)
+						
+			);
+		}
+		
+		if($semester_id!=null && $semester_id!='null' ) $condition['conditions']['semester_id']=$semester_id;
+		if($course_id!=null && $course_id!='null') $condition['conditions']['course_id']=$course_id;
+		if($course_type!=null && $course_type!='null') $condition['conditions']['CoursePlan.course_type']=$course_type;
+		if($score_type!=null && $score_type!='null') $condition['conditions']['score_type']=$score_type;
+		// 		debug($condition);
+		$condition['order']='course_id';
+// 		debug($condition);
+		$this->Paginator->settings=$condition;
 		$this->set('coursePlans', $this->Paginator->paginate());
 		$result['success']=true;
 		$this->set('result',$result);
@@ -34,6 +89,24 @@ class CoursePlansController extends AppController {
 	}
 	
 	public function listCoursePlans($department_id=null,$semester_id=null,$course_id=null) {
+		if(isset($this->request->query ['department_id']) && !(($this->request->query ['department_id']=='')))
+		{
+			$department_id = $this->request->query ['department_id'];
+// 			$condition['conditions']['department_id']=$department_id;
+				
+				
+				
+		}
+		if(isset($this->request->query ['course_id']) && !($this->request->query ['course_id']=='')){
+			($course_id = $this->request->query ['course_id']);
+// 			$condition['conditions']['course_id']=$course_id;
+		}
+		if(isset($this->request->query ['semester_id'])&& !($this->request->query ['semester_id']=='')){
+			($semester_id = $this->request->query ['semester_id']);
+// 			$condition['conditions']['semester_id']=$semester_id;
+				
+				
+		}
 		$this->CoursePlan->recursive = 0;
 		$this->layout='ajax';
 		if ($department_id == null || $department_id=='null' ) {
@@ -42,9 +115,7 @@ class CoursePlansController extends AppController {
 			);
 		} else {
 		
-			$condition = array (
-					'$department_id' => $department_id
-			);
+
 			App::import ( 'Controller', 'Departments' );
 			$DepartmentsController = new DepartmentsController ();
 			$depts = $DepartmentsController->getChildren ( $department_id );
@@ -55,7 +126,13 @@ class CoursePlansController extends AppController {
 				$parent_dept_id=$parent_dept['Department']['id'];
 				$department_id=$parent_dept_id;
 			}
-		}
+		}			
+		$condition = array (
+					'conditions'=>array(
+						'department_id' => $department_id	
+					)
+					
+			);
 		
 		if($semester_id!=null && $semester_id!='null' ) $condition['conditions']['semester_id']=$semester_id;
 		if($course_id!=null && $course_id!='null') $condition['conditions']['course_id']=$course_id;

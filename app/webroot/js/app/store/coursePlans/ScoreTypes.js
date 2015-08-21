@@ -4,7 +4,7 @@
 //     model: 'ExamName',
 	 fields: ['value','score_type'],
      data : [
-         [ '1',  '必修'],
-         [ '2', '选修']
+         [ '1',  '考试'],
+         [ '2', '考查']
      ]
  });

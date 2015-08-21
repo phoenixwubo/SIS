@@ -68,7 +68,7 @@ Ext.define('SIS.view.toolbar.FilteSubject', {
     },
   
     {
-        text: '查询',
+        text: '筛选',
 /*        handler: function() {
             Ext.MessageBox.confirm('Confirm Download', 'Would you like to download the chart as an image?', function(choice){
                 if(choice == 'yes'){
@@ -78,8 +78,8 @@ Ext.define('SIS.view.toolbar.FilteSubject', {
                 }
             });
         }*/
-        itemId:'search',
-        iconCls:'fiter'
+        itemId:'filter',
+        iconCls:'filter'
     }/* ,
     {
         text: '下载',

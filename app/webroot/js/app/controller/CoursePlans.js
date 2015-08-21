@@ -43,6 +43,10 @@ Ext.define('SIS.controller.CoursePlans', {
 			},
 			'editcourseplan button[action=save]':{
 				click:this.onEditCoursePlan
+			},
+			'courseplanlist button#filter':{
+				click:this.filterSubjects
+			
 			}
 			
 			
@@ -161,5 +165,26 @@ Ext.define('SIS.controller.CoursePlans', {
 
         	
         
+        },
+        filterSubjects:function(button){
+        	
+        	grid=button.up('grid');
+        	console.log(grid);
+        	department_id=grid.down('#department').getValue();
+        	semester_id=grid.down('#semester').getValue();
+        	course_id=grid.down('#course').getValue();
+        	score_type=grid.down('#score_type').getValue();
+        	course_type=grid.down('#course_type').getValue();
+        	
+        	store=grid.getStore();
+        	store.on('beforeload', function (store, options) {
+
+	            var new_params = { department_id:department_id,semester_id:semester_id, course_id:course_id,score_type:score_type,course_type:course_type};
+	            Ext.apply(store.proxy.extraParams, new_params);
+	        	
+
+
+	        });
+        		store.load({params:{start:0,page:1}});
         }
 });

@@ -3,7 +3,7 @@
 	 autoLoad:true,
 	 fields: ['value','course_type'],
      data : [
-         [ '1',  '考试'],
-         [ '2', '考查']
+         [ '1',  '必修'],
+         [ '2', '选修']
      ]
  });
