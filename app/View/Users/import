@@ -1,0 +1,4 @@
+<?php 
+echo $this->Form->create('Document', array('type' => 'file'));
+echo $this->Form->file('Document.submittedfile');
+echo $this->Form->end('Upload');

@@ -1,0 +1,42 @@
+Ext.application({
+    requires: ['Ext.container.Viewport'],
+    name: 'SIS',
+
+    appFolder: '/js/app',
+    controllers: [//'Users',
+                  'Departments'
+              ],
+
+		
+    launch: function() {
+		
+        Ext.create('Ext.container.Viewport', {
+            //layout: 'border',
+        	layout:'border',
+  items: [
+        	{
+            	//title:'南师附中江宁分校学生信息管理系统',
+            	region:'north',
+            	height:'150',
+            	html:'<br><center><font size=5>南师附中江宁分校</font><br><font size=2>学生信息管理系统</font></center>'
+            	
+            },
+                {
+            	 //title: '功能菜单',
+            	 region: 'west',
+            	 width: 180,
+            	 split: true,
+            	 collapisble: true,
+            	 
+            	 items:[{
+            	   xtype: 'departmentTree'
+            	   }]
+                },
+                {
+                	region:'center',
+					//xtype:'userlist'
+                }
+            ]
+        });
+    }
+});

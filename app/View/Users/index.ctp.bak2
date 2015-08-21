@@ -1,0 +1,41 @@
+<?php 
+echo $this->Html->link('OK',array('controller'=>'users','action'=>'alluser'), array('id' =>'remoteDataUrl' ));
+echo $this->Html->script('users/index');
+echo $this->Html->script('users/edit');
+$userCount=count($users);
+
+// debug($users);
+//echo JSON($users);
+?>
+{
+totalUser:<?php echo $userCount?>,
+userInJson:[
+	<?php foreach($users as $idx=>$user):?>
+	{
+		id:"<?php echo $user['User']['id']; ?>",
+		fullname:"<?php echo $user['User']['fullname']; ?>",
+		gender:"<?php echo $user['User']['gender']; ?>",
+		dob:"<?php echo $user['User']['DOB']; ?>"
+
+		
+}
+
+<?php echo($idx<$userCount-1)?',':'';?>
+<?php endforeach;?>
+
+
+]
+}
+
+<?php 
+echo $this->Paginator->sort('fullname');
+
+?>
+	<?php
+
+	
+	echo $this->Paginator->counter('{:count}');
+	//echo $this->Paginator->counter();
+	
+
+	?>	

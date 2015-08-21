@@ -1,0 +1,14 @@
+what,kind,bundleId,bundleVersion,description,time
+stopped,bundle,org.eclipse.php.debug.core,2.2.0.v20100616-1900,"org.eclipse.php.debug.core",1411567700091
+stopped,bundle,org.eclipse.php.ui,2.2.0.v20100616-1900,"org.eclipse.php.ui",1411567700091
+stopped,bundle,org.eclipse.dltk.ui,2.0.0.v20100603-0936,"org.eclipse.dltk.ui",1411567700091
+stopped,bundle,org.eclipse.equinox.p2.ui.sdk,1.0.100.v20100513,"org.eclipse.equinox.p2.ui.sdk",1411567700091
+stopped,bundle,org.eclipse.wst.xsl.jaxp.debug.ui,1.0.100.v201004290328,"org.eclipse.wst.xsl.jaxp.debug.ui",1411567700091
+stopped,bundle,org.eclipse.jdt.debug.ui,3.5.0.v20100602-0830,"org.eclipse.jdt.debug.ui",1411567700091
+stopped,bundle,org.eclipse.jdt.ui,3.6.0.v20100602-1600,"org.eclipse.jdt.ui",1411567700107
+stopped,bundle,org.eclipse.rse.importexport,1.2.100.v201003010830,"org.eclipse.rse.importexport",1411567700107
+stopped,bundle,org.eclipse.rse.shells.ui,3.0.200.v201006041352,"org.eclipse.rse.shells.ui",1411567700107
+stopped,bundle,org.eclipse.rse.files.ui,3.1.100.v201005221100,"org.eclipse.rse.files.ui",1411567700107
+stopped,bundle,org.eclipse.rse.processes.ui,3.0.200.v201003010830,"org.eclipse.rse.processes.ui",1411567700122
+stopped,bundle,org.eclipse.wst.dtd.ui,1.0.500.v201004290328,"org.eclipse.wst.dtd.ui",1411567700122
+stopped,bundle,org.eclipse.wst.jsdt.web.ui,1.0.300.v201006030742,"org.eclipse.wst.jsdt.web.ui",1411567700122

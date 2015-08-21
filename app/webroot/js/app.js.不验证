@@ -1,0 +1,23 @@
+Ext.application({
+    //requires: ['Ext.container.Viewport'],
+    name: 'SIS',
+
+    appFolder: '/js/app',
+    controllers:['Students',
+                 'Login',
+                 'Users',
+                 'CoursePlans',
+                 'Courses',
+                 'Manu',
+                 'Semesters',
+                 'Scores',
+                 'Departments',
+                 'TeachingTasks',
+                 'Electives'],
+
+		
+    launch: function() {
+    	Ext.create('SIS.view.SISViewport');
+       
+    }
+});

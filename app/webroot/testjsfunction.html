@@ -1,0 +1,50 @@
+
+<!-- 测试在html中的面向对象的操作，见Extjs开发实战p25 -->
+<script type="text/javascript">
+	function Person(name,email){
+		this.name=name;
+		this.email=email;
+
+	}//eo Person
+
+	Person.prototype.getInfo = function() {
+		return "I'm"+ths.name+", with email:"+this.email;
+	};
+
+	function EmployeeWithSuperFields(name,email,title){
+		Person.call(this,name,email);
+		this.title=title;
+	}
+
+	EmployeeWithSuperFields.prototype=new Person();
+
+	function EmployeeWithoutSuperFields(name,email,title){
+		Person.call(this,name,email);
+
+	}
+
+	EmployeeWithoutSuperFields.prototype=new Person();
+
+	delete EmployeeWithoutSuperFields.prototype.name;
+	delete EmployeeWithoutSuperFields.prototype.email;
+
+	EmployeeWithoutSuperFields.prototype.constructor=EmployeeWithoutSuperFields;
+
+	var e1=new Array();
+	var e2=new Array();
+
+	console.time("e1Runs10000Times");
+	for (var i = 0; i <= 10000; i++) {
+		e1[i]=new EmployeeWithSuperFields();
+		e1[i].getInfo;
+	}
+	console.timeEnd("e1Runs10000Times");
+
+	console.time("e2Runs10000Times");
+	for (var i = 0; i <= 10000; i++) {
+		e1[i]=new EmployeeWithoutSuperFields();
+		e1[i].getInfo;
+	}
+	console.timeEnd("e2Runs10000Times");
+		
+</script>

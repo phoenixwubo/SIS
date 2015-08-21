@@ -1,0 +1,97 @@
+@CHARSET "UTF-8";
+
+splashscreen {
+	background-color: white;
+	opacity: 1;
+}
+
+.x-mask-msg.splashscreen,.x-mask-msg.splashscreen div {
+	font-size: 16px;
+	font-weight: bold;
+	padding: 30px 5px 5px 5px;
+	border: none;
+	background-color: transparent;
+	background-position: top center;
+}
+
+.x-message-box .x-window-body .x-box-inner {
+	min-height: 110px !important;
+}
+
+.x-splash-icon {
+	background-image: url('../images/children.png') !important;
+	margin-top: -30px;
+	margin-bottom: 15px;
+	height: 170px;
+	width: 200px;
+}
+
+.key {
+	background-image: url('../images/key.png');
+	
+}
+
+.key-go {
+	background-image: url('../images/key-go.png');
+}
+
+.cancel {
+	background-image: url('../images/cancel.png');
+}
+
+.capslock{
+background:url('../images/bullet_error.png') no-repeat center left;
+padding:2px;
+padding-left:20px;
+font-weight:700;
+}
+#titleHeader {
+color:#000;
+font-size:20px;
+font-weight:bold;
+font-family:'Lucida Grande', Arial, Sans;
+}
+.logout{
+	background-image: url('../images/logout.png');
+	}
+	
+.refresh{
+	background-image: url('../images/refresh.png');
+	}
+.search{
+	background-image: url('../images/search.png');
+	}
+.users{
+	background-image: url('../images/users.png');
+	}
+.students{
+	background-image: url('../images/students.png');width:16px;height:16px;
+	}
+.dormitory_teacher{
+	background-image: url('../images/dormitory_teacher.png');
+	}
+.dormitory_stay{
+	
+	background-image: url('../images/dormitory_stay.png');
+	}
+.dormitory_score{
+	background-image: url('../images/dormitory_score.png');
+	}
+.chart{
+	background-image: url('../images/chart.png');
+	}
+.add{
+	background-image: url('../images/add.png');
+	}
+.delete{
+	background-image: url('../images/delete.png');
+	}
+.edit{
+	background-image: url('../images/pencil.png');
+	}
+.home{
+	background-image: url('../images/home.png');
+	}
+.implement{
+	background-image: url('../images/implement.png');
+	}
