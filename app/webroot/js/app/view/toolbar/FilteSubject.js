@@ -1,4 +1,4 @@
-Ext.define('SIS.view.toolbar.FiltSubject', {
+Ext.define('SIS.view.toolbar.FilteSubject', {
     extend: 'Ext.toolbar.Toolbar',
     alias: 'widget.filtsubject',
 
@@ -31,6 +31,29 @@ Ext.define('SIS.view.toolbar.FiltSubject', {
     	valueField:'id',
     	emptyText:'请选择',
     
+    },  {
+    	fieldLabel:'课程类型',
+    	xtype:'combo',
+    	labelWidth : 55,
+    	labelAlign : 'right',
+    	itemId:'course_type',
+    	store:'coursePlans.CourseTypes',
+    	displayField:'course_type',
+    	valueField:'value',
+    	emptyText:'请选择'
+    
+    },
+    {
+    	fieldLabel:'成绩类型',
+    	xtype:'combo',
+    	labelWidth : 55,
+    	labelAlign : 'right',
+    	itemId:'score_type',
+    	store:'coursePlans.ScoreTypes',
+    	displayField:'score_type',
+    	valueField:'value',
+    	emptyText:'请选择'
+    
     },{
     	fieldLabel:'学科',
     	labelWidth : 45,
@@ -43,18 +66,7 @@ Ext.define('SIS.view.toolbar.FiltSubject', {
     	emptyText:'请选择'
     
     },
-    {
-    	fieldLabel:'考试名称',
-    	xtype:'combo',
-    	labelWidth : 55,
-    	labelAlign : 'right',
-    	itemId:'exam_name',
-    	store:'scores.ExamNames',
-    	displayField:'exam_name',
-    	valueField:'field',
-    	emptyText:'请选择'
-    
-    },
+  
     {
         text: '查询',
 /*        handler: function() {

@@ -1,7 +1,6 @@
- Ext.define('SIS.store.scores.CourseType', {
+ Ext.define('SIS.store.coursePlans.CourseTypes', {
 	 extend: 'Ext.data.ArrayStore',
 	 autoLoad:true,
-//     model: 'ExamName',
 	 fields: ['value','course_type'],
      data : [
          [ '1',  '考试'],

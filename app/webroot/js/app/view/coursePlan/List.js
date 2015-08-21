@@ -72,7 +72,9 @@ Ext.define('SIS.view.coursePlan.List' ,{
         }
     });  
 },
-   dockedItems: [
+   dockedItems: [{
+	   				xtype:'filtsubject'
+   				},
                  {
                      xtype: 'addeditdelete'
                  },{

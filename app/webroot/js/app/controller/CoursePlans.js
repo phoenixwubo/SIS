@@ -2,12 +2,13 @@ Ext.define('SIS.controller.CoursePlans', {
     extend: 'Ext.app.Controller',
     
     models: ['CoursePlan'],
-    stores:['CoursePlans','Courses','Users','Semesters','coursePlans.CoursePlanLists'],
+    stores:['CoursePlans','Courses','Users','Semesters','coursePlans.CoursePlanLists','coursePlans.ScoreTypes','coursePlans.CourseTypes'],
     views:[
            'coursePlan.List',
            'toolbar.AddEditDelete',	
            'coursePlan.Edit',
-           'coursePlan.Add'
+           'coursePlan.Add',
+           'toolbar.FilteSubject'
 // 'coursePlan.Import',
 // 'coursePlan.Profile',
 // 'coursePlan.Chart',
