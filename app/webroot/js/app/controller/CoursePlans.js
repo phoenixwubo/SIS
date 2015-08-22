@@ -121,11 +121,17 @@ Ext.define('SIS.controller.CoursePlans', {
     			alert('请选择一条记录');
     			}
     		else{
-    			var view = Ext.widget('editcourseplan');
+    			
 
     			var record=sm.getSelection()[0];
-    		//console.log(record);
-    			view.down('form').loadRecord(record);
+    			var implement=record.getData().implement;
+    			if(implement>0){
+    				alert('已经部署的课程计划不允许修改');
+    				return;
+    			}
+    				var view = Ext.widget('editcourseplan');
+    				view.down('form').loadRecord(record);
+    			
     	}},
     	onEditCoursePlan:function(button){
     		 var win    = button.up('window'),
@@ -153,9 +159,14 @@ Ext.define('SIS.controller.CoursePlans', {
         	if(sm.getSelection().length==0){
         		alert('请选择一条记录')}
         	else{
-        		console.log(sm.getSelection()[0].data.id);
+        		var implement=sm.getSelection()[0].data.implement;
+    			if(implement>1){
+    				alert('已经有数据的的课程计划不允许删除');
+    				return;
+    			}
+        		console.log(sm.getSelection()[0].data);
         		
-        		Ext.MessageBox.confirm('删除记录','确定要删除'+sm.getSelection()[0].data.course_name+'？',function(btn){
+        		Ext.MessageBox.confirm('删除记录','确定要删除课程计划'+sm.getSelection()[0].data.id+'？',function(btn){
         			if(btn == 'yes'){
     					store.remove(sm.getSelection());
     					store.sync({

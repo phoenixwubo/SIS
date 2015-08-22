@@ -22,10 +22,7 @@ Ext.define('SIS.view.coursePlan.Add', {
                         	 listeners:{
 
                         		 change: function (field, newValue, oldValue) { 
-//    							      alert( record[0].get("value"));
-//    							      alert( record[0].get("text"));
     								   value=newValue['course_type'];
-    								   console.log(value);
     								   course_combo=field.up('window').down('form combo[name=course_id]');
     								   store=course_combo.getStore();
     								 store.isFiltered() ? store.clearFilter() :'' ;
