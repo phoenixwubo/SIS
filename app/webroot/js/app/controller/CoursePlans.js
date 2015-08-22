@@ -2,7 +2,14 @@ Ext.define('SIS.controller.CoursePlans', {
     extend: 'Ext.app.Controller',
     
     models: ['CoursePlan'],
-    stores:['CoursePlans','Courses','Users','Semesters','coursePlans.CoursePlanLists','coursePlans.ScoreTypes','coursePlans.CourseTypes'],
+    stores:['CoursePlans',
+            'Courses',
+            'Users',
+            'users.UsersList',
+            'Semesters',
+            'coursePlans.CoursePlanLists',
+            'coursePlans.ScoreTypes',
+            'coursePlans.CourseTypes'],
     views:[
            'coursePlan.List',
            'toolbar.AddEditDelete',	
@@ -47,7 +54,11 @@ Ext.define('SIS.controller.CoursePlans', {
 			'courseplanlist button#filter':{
 				click:this.filterSubjects
 			
-			}
+			},
+			'courseplanlist combo#course_type':{
+			select:this.onFilteCourseType
+		
+		}
 			
 			
 			
@@ -186,5 +197,27 @@ Ext.define('SIS.controller.CoursePlans', {
 
 	        });
         		store.load({params:{start:0,page:1}});
+        },
+        
+        onFilteCourseType:function(combo){
+        	value=combo.getValue();
+        	courseCombo=combo.up('grid').down('#course')
+        	store=this.getCoursesStore();
+        	console.log(store);
+        	var records = [];
+        	store.each(function(r){
+        		records.push(r.copy());
+        	});
+        	var store2 = new Ext.data.Store({
+        		recordType: store.recordType,
+        		model:store.getProxy().getModel()
+        		
+        	});
+//        	store2.model=store.getProxy().getModel();
+        	store2.add(records);
+//        	store.clearFilter();
+        	store2.filter('course_type',value);
+        	courseCombo.bindStore(store2);
+        	console.log(store2);
         }
 });

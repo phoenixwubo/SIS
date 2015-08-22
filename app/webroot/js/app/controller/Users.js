@@ -2,7 +2,7 @@ Ext.define('SIS.controller.Users', {
     extend: 'Ext.app.Controller',
     
     models: ['User'],
-    stores:['Users'],
+    stores:['Users','Courses'],
     views:[
            'user.List',
            'user.Edit',

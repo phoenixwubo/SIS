@@ -402,18 +402,19 @@ class UsersController extends AppController {
 
 	public function listUser() {
 		$this->layout='ajax';
-		$limit=30;
-		$page=0;
-		$page= $this->request->query['page'];
-		$limit= $this->request->query['limit'];
+// 		$limit=30;
+// 		$page=0;
+// 		$page= $this->request->query['page'];
+// 		$limit= $this->request->query['limit'];
 		// 		 $this->paginate=array('limit'=>$limit,'page'=>$page);
 		// 		 $this->set('users', $this->paginate());
 			
-		$this->Paginator->settings['page']=$page;
-		$this->Paginator->settings['limit'] = $limit;
+// 		$this->Paginator->settings['page']=$page;
+// 		$this->Paginator->settings['limit'] = $limit;
 
-		$this->set('users', $this->Paginator->paginate());
-			
+// 		$this->set('users', $this->Paginator->paginate());
+		$this->set('users',$this->User->find('all'));	
+		
 			
 	}
 

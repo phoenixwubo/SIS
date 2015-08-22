@@ -17,14 +17,14 @@ Ext.define('SIS.view.user.Edit', {
 							fieldLabel : '用户名',
 							name : 'username',
 			
-						}, {
+						}, /*{
 							xtype : 'textfield',
 			
 							fieldLabel : '密码',
 							name : 'password',
 							inputType: 'password', 
 			
-						}, {
+						},*/ {
 							xtype : 'textfield',
 							name : 'fullname',
 							fieldLabel : '姓名'
@@ -50,7 +50,16 @@ Ext.define('SIS.view.user.Edit', {
 								name : 'gender',
 								inputValue : '2'
 							}, ]
-						} ]
+						},{
+  							xtype:'combo',
+  							name:'main_subject',
+  							fieldLabel:'主要任教学科',
+  							store:'Courses',
+  							displayField:'course_name',
+  							valueField:'id',
+  							queryMode:'local'
+  						}  
+						]
             }
         ];
        

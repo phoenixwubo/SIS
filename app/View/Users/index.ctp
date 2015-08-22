@@ -18,7 +18,7 @@ userInJson:[
 		fullname:"<?php echo $user['User']['fullname']; ?>",
 		gender:"<?php echo $user['User']['gender']; ?>",
 		dob:"<?php echo $user['User']['dob']; ?>",
-	
+		main_subject:<?php echo $user['User']['main_subject']; ?>
 
 		
 }

@@ -26,6 +26,7 @@ class CoursesController extends AppController {
 		$result['success']=true;
 		$this->set('result',$result);
 		$this->set('courses', $this->Paginator->paginate());
+// 		$this->set('courses', $this->Course->find('all'));
 	}
 
 /**

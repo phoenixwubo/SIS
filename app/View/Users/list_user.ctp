@@ -7,7 +7,7 @@ $userCount=count($users);
 
 ?>
 {
-totalUser:<?php echo $this->Paginator->counter('{:count}')?>,
+totalUser:<?php /* echo $this->Paginator->counter('{:count}') */echo $userCount;?>,
 success:true,
 userInJson:[
 	<?php foreach($users as $idx=>$user):?>
@@ -15,9 +15,8 @@ userInJson:[
 		id:<?php echo $user['User']['id']; ?>,
 		fullname:"<?php echo $user['User']['fullname']; ?>",
 		gender:"<?php echo $user['User']['gender']; ?>",
-		dob:"<?php echo $user['Profile']['DOB']; ?>",
-		id_number:"<?php echo $user['Profile']['id_number']; ?>",
-
+		dob:"<?php echo $user['User']['dob']; ?>",
+		main_subject:<?php echo $user['User']['main_subject']; ?>
 		
 }
 <?php echo($idx<$userCount-1)?',':'';?>

@@ -63,7 +63,8 @@ Ext.define('SIS.view.toolbar.FilteSubject', {
     	store:'Courses',
     	displayField:'course_name',
     	valueField:'id',
-    	emptyText:'请选择'
+    	emptyText:'请选择',
+    		queryMode : 'local'
     
     },
   

@@ -50,6 +50,13 @@ Ext.define('SIS.view.user.Add', {
           								name : 'gender',
           								inputValue : '2'
           							}, ]
+          						},{
+          							xtype:'combo',
+          							fieldLabel:'主要任教学科',
+          							store:'Courses',
+          							displayField:'course_name',
+          							valueField:'id',
+          							queryMode:'local'
           						} ]
                       }
                   ];

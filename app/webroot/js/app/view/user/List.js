@@ -34,6 +34,7 @@ Ext.define('SIS.view.user.List' ,{
             {header: '姓名',  dataIndex: 'fullname',  flex: 1},
           
             {header:'性别',dataIndex:'gender',flex:1,renderer:this.renderGender},
+            {header:'主要任教学科',dataIndex:'main_subject'}
  
             
         ];
