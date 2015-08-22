@@ -7,9 +7,9 @@ success:true,
 nativePlaceInJson:[
 <?php foreach($nativePlaces as $idx=>$nativePlace):?>
 	{
-		native_place:'<?php echo $nativePlace[0]['region']?>',
-		number:<?php echo $nativePlace[0]['number']?>
+		native_place:'<?php echo $nativePlace['region']?>',
+		number:<?php echo $nativePlace['number']?>
 	}
-	<?php echo($idx<$nativePlaceCount-1)?',':'';?>
+	<?php echo($idx<$nativePlaceCount)?',':'';?>
 <?php endforeach;?>
 ]}

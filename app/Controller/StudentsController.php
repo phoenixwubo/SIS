@@ -283,13 +283,120 @@ class StudentsController extends AppController {
 						'count(native_place) AS number'),
 // 				'group'=>array("native_place having native_place like '%南京市%'"),
 				'group'=>array('region'),
-				'order'=>array('number DESC'),
+// 				'order'=>array('number DESC'),
 				'conditions'=>array($conditions)
 		);
-		$nativePlaces=$this->Student->find('all',$condition);
-// 		debug($nativePlaces);
+		$tmp_nativePlaces=$this->Student->find('all',$condition);
+		$nativePlaces=array(
+				'1'=>array(
+						'region' => '玄武区',
+						'number' =>0),
+			'2'=>array(
+						'region' => '秦淮区',
+						'number' =>0),
+			'3'=>array(
+						'region' => '建邺区',
+						'number' =>0),
+			'4'=>array(
+						'region' => '鼓楼区',
+						'number' =>0),
+			'5'=>array(
+						'region' => '雨花台区',
+						'number' =>0),
+			'6'=>array(
+						'region' => '栖霞区',
+						'number' =>0),
+			'7'=>array(
+						'region' => '江宁区',
+						'number' =>0),
+			'8'=>array(
+						'region' => '浦口区',
+						'number' =>0),
+			'9'=>array(
+						'region' => '六合区',
+						'number' =>0),
+			'10'=>array(
+						'region' => '溧水区',
+						'number' =>0),
+			'11'=>array(
+						'region' => '高淳区',
+						'number' =>0),
+			'12'=>array(
+						'region' => '本省外市',
+						'number' =>0),
+			'13'=>array(
+					'region' => '外省',
+					'number' =>0),
+			'14'=>array(
+					'region' => '其他',
+					'number' =>0),
+				
+		);
+		
+// 		debug($tmp_nativePlaces);
+		foreach($tmp_nativePlaces as $tmp_nativePlace){
+			$regin=$tmp_nativePlace['0']['region'];
+			$number=$tmp_nativePlace['0']['number'];
+			switch ($regin){
+				case '玄武区':
+					$nativePlaces[1]['number']=$number;
+					break;
+				case '秦淮区':
+					$nativePlaces[2]['number']+=$number;
+				break;
+				case '建邺区':
+					$nativePlaces[3]['number']=$number;
+					break;
+				case '鼓楼区':
+					$nativePlaces[4]['number']+=$number;
+					break;
+				case '雨花台区':
+					$nativePlaces[5]['number']=$number;
+					break;
+				case '栖霞区':
+					$nativePlaces[6]['number']=$number;
+					break;
+				case '江宁区':
+					$nativePlaces[7]['number']=$number;
+					break;
+				case '浦口区':
+					$nativePlaces[8]['number']=$number;
+					break;
+				case '六合区':
+					$nativePlaces[9]['number']=$number;
+					break;
+				case '溧水区':
+					$nativePlaces[10]['number']=$number;
+					break;
+				case '溧水县':
+					$nativePlaces[10]['number']+=$number;
+					break;
+				case '高淳区':
+					$nativePlaces[11]['number']+=$number;
+					break;
+				case '高淳县':
+					$nativePlaces[11]['number']+=$number;
+					break;
+				case '本省外市':
+					$nativePlaces[12]['number']=$number;
+					break;
+				case '外省':
+					$nativePlaces[13]['number']=$number;
+					break;
+				case '白下区':
+					$nativePlaces[2]['number']+=$number;
+					break;
+				case '下关区':
+					$nativePlaces[4]['number']+=$number;
+					break;
+				default:
+					$nativePlaces[14]['number']+=$number;
+					break;
+			}
+		}
 // 		die();
 		$this->set('nativePlaces',$nativePlaces);
+// 		debug($nativePlaces);
 	}
 	
 	public function rm($name)
