@@ -2,7 +2,7 @@ Ext.define('SIS.controller.Courses', {
     extend: 'Ext.app.Controller',
     
     models: ['Course'],
-    stores:['Courses','Users','Semesters'],
+    stores:['Courses','Users','Semesters','courses.CoursesList'],
     views:[
            'course.List',
            'toolbar.AddEditDelete',

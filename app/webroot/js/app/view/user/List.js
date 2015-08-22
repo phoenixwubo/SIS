@@ -34,7 +34,14 @@ Ext.define('SIS.view.user.List' ,{
             {header: '姓名',  dataIndex: 'fullname',  flex: 1},
           
             {header:'性别',dataIndex:'gender',flex:1,renderer:this.renderGender},
-            {header:'主要任教学科',dataIndex:'main_subject'}
+            {header:'主要任教学科',dataIndex:'main_subject',
+				renderer : function(value, metaData, record) { // #2
+					var coursesStore = Ext.getStore('courses.CoursesList');
+					//var str=String(value).substring(0,7);
+					//console.log(str);
+					var course = coursesStore.findRecord('id', value);
+					return course != null ? course.get('course_name') : value;
+				}}
  
             
         ];

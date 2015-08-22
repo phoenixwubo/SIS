@@ -28,6 +28,13 @@ class CoursesController extends AppController {
 		$this->set('courses', $this->Paginator->paginate());
 // 		$this->set('courses', $this->Course->find('all'));
 	}
+	
+	public function listCourse(){
+		$this->layout='ajax';
+		$this->set('courses',$this->Course->find('all'));
+		
+	}
+	
 
 /**
  * view method
