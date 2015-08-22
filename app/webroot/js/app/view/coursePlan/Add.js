@@ -18,7 +18,27 @@ Ext.define('SIS.view.coursePlan.Add', {
                         	fieldLabel:'课程类别',
                         	items:[{boxLabel:'必修',name:'course_type',inputValue:'1',checked:'true'},
                         	       {boxLabel:'选修',name:'course_type',inputValue:'2'}
-                        	       ]
+                        	       ],
+                        	 listeners:{
+
+                        		 change: function (field, newValue, oldValue) { 
+//    							      alert( record[0].get("value"));
+//    							      alert( record[0].get("text"));
+    								   value=newValue['course_type'];
+    								   console.log(value);
+    								   course_combo=field.up('window').down('form combo[name=course_id]');
+    								   store=course_combo.getStore();
+    								 store.isFiltered() ? store.clearFilter() :'' ;
+    								   store.filter({
+    									 property:  'course_type',
+    									  value: value,
+    									  exactMatch: true,
+    									  caseSensitive: true
+    									  
+    								   });
+    							   } 
+    							  
+                        	 }
                         
   						},{
   							xtype:'radiogroup',
