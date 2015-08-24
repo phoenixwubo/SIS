@@ -10,7 +10,8 @@ Ext.define('SIS.controller.Electives', {
 			'elective.List',
            'elective.Selector',
            'elective.ResultList',
-           'elective.NoexamResultList'
+           'elective.NoexamResultList',
+           'toolbar.FilteElectiveCourse'
 
 
     ],
@@ -23,6 +24,13 @@ Ext.define('SIS.controller.Electives', {
     }],
     init:function(){
     	this.control({
+    		'electivelist':{
+    			beforerender:this.onElectiveListRender
+    		},
+    			
+    		'electivelist #filter':{
+    			click:this.onElectiveListFilter
+    		},
     		'electivelesson #add ':{
     			click:this.addelectiveplanForm
     		},
@@ -37,6 +45,26 @@ Ext.define('SIS.controller.Electives', {
 			}
     		
     	});
+    	},
+    	onElectiveListRender:function(grid){
+//    		console.log(grid);
+    		course=grid.down('#course');
+    		courseStore=course.getStore();
+    		courseStore.isFiltered() ? courseStore.clearFilter(true) : '';
+    		courseStore.filter('course_type',2);
+    	},
+    	onElectiveListFilter:function(button){
+    		grid=button.up('grid');
+    		store=this.getElectivesElectivesStore();
+    		department_id=grid.down('#department').getValue();
+    		console.log(department_id);
+    		semester_id=grid.down('#semester').getValue();
+    		course_id=grid.down('#course').getValue();
+            var new_params = { course_type: 2,department_id:department_id,semester_id:semester_id,course_id:course_id};
+            
+            Ext.apply(store.proxy.extraParams, new_params);
+            store.load();
+            grid.bindStore(store);
     	},
     	addelectiveplanForm:function(){
     		var view = Ext.widget('addelectiveplan');

@@ -55,12 +55,12 @@ Ext.define('SIS.view.toolbar.FilteSubject', {
     	emptyText:'请选择'
     
     },{
-    	fieldLabel:'学科',
+    	fieldLabel:'科目',
     	labelWidth : 45,
     	labelAlign : 'right',
     	xtype:'combo',
     	itemId:'course',
-    	store:'Courses',
+    	store:'courses.CoursesList',
     	displayField:'course_name',
     	valueField:'id',
     	emptyText:'请选择',

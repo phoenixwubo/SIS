@@ -22,11 +22,49 @@ class ElectivesController extends AppController {
  *
  * @return void
  */
-	public function index() {
+	public function index($course_type=null,$department_id=null,$semester_id=null,$course_id=null) {
+		$option=array();
+		if(isset($this->request->query ['department_id']) && !(($this->request->query ['department_id']=='')))
+		{
+			$department_id = $this->request->query ['department_id'];
+		}
+		if(isset($this->request->query ['course_type']) && !(($this->request->query ['course_type']=='')))
+		{
+			$course_type = $this->request->query ['course_type'];
+		}
+		if(isset($this->request->query ['semester_id']) && !(($this->request->query ['semester_id']=='')))
+		{
+			$semester_id = $this->request->query ['semester_id'];
+			$option['conditions']['semester_id']=$semester_id;
+		}
+		if(isset($this->request->query ['course_id']) && !(($this->request->query ['course_id']=='')))
+		{
+			$course_id = $this->request->query ['course_id'];
+			$option['conditions']['course_id']=$course_id;
+		}
+		if($course_type!=null) $option['conditions']['Elective.course_type'] =$course_type;
+		if($department_id!=null) 
+		{
+
+
+			App::import ( 'Controller', 'Departments' );
+			$DepartmentsController = new DepartmentsController ();
+			$department = $DepartmentsController->view ( $department_id );
+			
+// 			debug($department);
+			$dept_number=$department['Department']['dept_number'];
+			$option['conditions']['Elective.dept_number like ']=$dept_number.'%';
+			$this->Paginator->settings=$option;
+		}
 		$this->Elective->recursive = 0;
 		$success=true;
-		$this->set('electives',$this->Elective->find('all'));
-// 		$this->set('electives', $this->Paginator->paginate());
+
+		$page= $this->request->query['page'];
+		$limit= $this->request->query['limit'];
+		$this->Paginator->settings['page']=$page;
+		$this->Paginator->settings['limit'] = $limit;
+// 		$this->set('electives',$this->Elective->find('all'));
+		$this->set('electives', $this->Paginator->paginate());
 		$this->set('success',$success);
 		$this->layout='ajax';
 	}

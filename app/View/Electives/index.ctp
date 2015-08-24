@@ -5,7 +5,7 @@ if(isset($success)){
 // 	debug ($electives);
 ?>
 {
-totalElectives:<?php echo $electiveCount;?>,
+totalElectives:<?php echo  $this->Paginator->counter('{:count}')?>,
 success:true,
 electivesInJson:[
 	<?php foreach ($electives as $idx=>$elective ):?>
@@ -15,7 +15,8 @@ electivesInJson:[
 			course_id:'<?php echo  $elective['Elective']['course_id']==null ? 'null' :$elective['Elective']['course_id'];?>',
 			course_type:	<?php echo  $elective['Elective']['course_type'];?>,
 			result:<?php echo $elective['Elective']['result']==null ? 'null' : $elective['Elective']['result'] ?>,
-			stu_name:'<?php echo $elective['Student']['stu_name'];?>'
+			stu_name:'<?php echo $elective['Student']['stu_name'];?>',
+			semester_id:'<?php echo  $elective['CoursePlan']['semester_id'];?>'
 		}
 		<?php echo($idx<$electiveCount-1)?',':'';?>
 		<?php endforeach;?>

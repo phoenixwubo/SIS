@@ -364,11 +364,11 @@ Ext.define('SIS.controller.Scores', {
         			 }
 //        			 console.log(store.model.getFields());
 
-        			  console.log(fields);
+//        			  console.log(fields);
         			  store.model.setFields(fields);
         			  grid.reconfigure(store,columns);
-        			  console.log(store.model.getFields());
-        			  console.log(grid.columns);
+//        			  console.log(store.model.getFields());
+//        			  console.log(grid.columns);
         			  },
         	 failure: function(response){
                  Ext.Msg.alert('error',response);

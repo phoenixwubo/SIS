@@ -3,10 +3,10 @@ Ext.define('SIS.view.elective.List' ,{
     alias: 'widget.electivelist',
 
     title: '选修课',
-    store:'electives.Electives',
+//    store:'electives.Electives',
     dockedItems: [
                   {
-                      xtype: 'addeditdeletesearch',
+                      xtype: 'filtelecticourse',
                   },   {
                     	  xtype:'pagenate',
                     	  store: 'electives.Electives',items:[  
@@ -27,12 +27,22 @@ Ext.define('SIS.view.elective.List' ,{
 	      ],
     initComponent: function() {
     	this.columns = [
-    	                     {header: 'ID',  dataIndex: 'id',  flex: 1},  
-    	                     {header: '学期',  dataIndex: 'sem_name',  flex: 1},
-    	                     {header: '课时序号',  dataIndex: 'lesson_number',  flex: 1},
-    	                     {header: '课程名称',  dataIndex: 'course_id',  flex: 1,
+//    	                     {header: 'ID',  dataIndex: 'id',  flex: 1},  
+    	                     {header: '学期',  
+    	                        	dataIndex: 'semester_id',
+    	                        	flex: 1,
+    								renderer : function(value, metaData, record) { // #2
+    									var semestersStore = Ext.getStore('Semesters');
+    									var semester = semestersStore.findRecord('id', value);
+    									return semester != null ? semester.get('sem_name') : value;
+    								}},
+//    	                     {header: '课时序号',  dataIndex: 'lesson_number',  flex: 1},
+    	                    
+    	                     {header: '学号',  dataIndex: 'stu_number',  flex: 1},
+    	                     {header: '姓名',  dataIndex: 'stu_name',  flex: 1},
+    	                      {header: '课程名称',  dataIndex: 'course_id',  flex: 1,
     	                    	 renderer : function(value, metaData, record) { 
-    									var coursesStore = Ext.getStore('Courses');
+    									var coursesStore = Ext.getStore('courses.CoursesList');
     									var course = coursesStore.findRecord('id', value);
     									return course != null ? course.get('course_name') : value==0 ? "<span style='color:red;'>未选择</span>":value;
     								},
@@ -40,14 +50,11 @@ Ext.define('SIS.view.elective.List' ,{
     	                             xtype: 'combobox',
     	                             displayField:'course_name',
            							valueField:'id',
-    	                             store:'Courses',
+    	                             store:'courses.CoursesList',
     	                             allowBlank: false,
     	                             minValue: 0,
     	                             maxValue: 100
-    	                         }},
-    	                     {header: '学号',  dataIndex: 'stu_number',  flex: 1},
-    	                     {header: '姓名',  dataIndex: 'stu_name',  flex: 1}
-    	                     ];
+    	                         }}];
 //    	 this.bbar = Ext.create('Ext.PagingToolbar', {  
 //             store: this.store,  
 //             displayInfo: true,  

@@ -18,7 +18,7 @@ Ext.define('SIS.store.electives.Electives', {
         reader: {
             type: 'json',
             root: 'electivesInJson',
-            totalProperty:'totalElective',
+            totalProperty:'totalElectives',
             successProperty: 'success'
         }
 }

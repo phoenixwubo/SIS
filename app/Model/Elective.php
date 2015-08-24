@@ -32,6 +32,15 @@ class Elective extends AppModel {
 // 			'fields' => '',
 // 			'order' => ''
 // 		),
+
+			'CoursePlan' => array(
+					'className' => 'CoursePlan',
+					'foreignKey' => 'course_plan_id',
+					'conditions' => '',
+					'fields' => '',
+					'order' => ''
+			),
+
 			'Course' => array(
 					'className' => 'Course',
 					'foreignKey' => 'course_id',

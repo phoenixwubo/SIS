@@ -134,8 +134,10 @@ public function remove($id = null, $delta = false) {
 		}
 		$resutl['success']=true;
 		$options = array('conditions' => array('Department.' . $this->Department->primaryKey => $id));
-		$this->set('department', $this->Department->find('first', $options));
+		$department=$this->Department->find('first', $options);
+		$this->set('department', $department);
 		$this->set('result',$resutl);
+		return $department;
 		//$options=array('conditions'=>array('Student.dept_id='.$id));
 		//$this->set('students',$this->Department->Student->find('all',($options)));
 	}
