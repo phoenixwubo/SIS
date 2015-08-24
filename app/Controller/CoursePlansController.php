@@ -413,7 +413,7 @@ class CoursePlansController extends AppController {
 		if($course_plan['CoursePlan']['implement']>0){
 			$result['tip']='该课程计划已经部署过';
 // 			echo('该课程计划已经部署过');
-			debug($course_plan);
+// 			debug($course_plan);
 			$result['success']=false;
 		}
 		else{
@@ -437,11 +437,13 @@ class CoursePlansController extends AppController {
 								$options['conditions']=array(
 									'department_id'=>$department_id,
 									'CoursePlan.course_type'=>$course_type,
-									'semester_id'=>$semester_id
+									'semester_id'=>$semester_id,
+									'implement >'=>0
 									);
+// 								debug($options);
 								if(count($this->CoursePlan->find('first',$options))>0){
-// 									echo('本学期已经有一个选修课时,成功添加选修课程');
-									$result['tip']='成功添加选修课程';
+//									echo('本学期已经有一个选修课时,成功添加选修课程');
+									$result['tip']='本学期已经有一个选修课时成功添加选修课程';
 									$result['success']=true;
 										
 								}else{
