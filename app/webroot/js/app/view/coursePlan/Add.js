@@ -6,7 +6,7 @@ Ext.define('SIS.view.coursePlan.Add', {
     title: '添加课程计划',
     layout: 'fit',
     autoShow: true,
-
+    modal: true,
   
     initComponent:function() {
         this.items = [

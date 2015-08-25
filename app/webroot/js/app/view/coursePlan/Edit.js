@@ -6,7 +6,7 @@ Ext.define('SIS.view.coursePlan.Edit', {
     title: '编辑课程计划',
     layout: 'fit',
     autoShow: true,
-
+    modal: true,
   
     initComponent:function() {
         this.items = [

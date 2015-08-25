@@ -6,7 +6,7 @@ Ext.define('SIS.view.user.Edit', {
     title: 'Edit User',
     layout: 'fit',
     autoShow: true,
-
+    modal: true,
   
     initComponent:function() {
         this.items = [

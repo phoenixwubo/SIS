@@ -8,7 +8,7 @@ Ext.define('SIS.view.semester.Edit', {
     bodyPadding: 10,
     frame: true,
     autoShow: true,
-
+    modal: true,
     renderCurrent:function(value){
 	if(value==true){
 		return "是";

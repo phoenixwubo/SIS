@@ -7,6 +7,7 @@ Ext.define('SIS.view.student.Edit', {
     //height: 200,
     bodyPadding: 10,
     frame: true,
+    modal: true,
     autoShow: true,
     initComponent:function() {
     	var statusData=[

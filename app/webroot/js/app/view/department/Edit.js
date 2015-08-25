@@ -7,7 +7,7 @@ Ext.define('SIS.view.department.Edit', {
     layout: 'fit',
     autoShow: true,
 
-  
+    modal: true,
     initComponent:function() {
         this.items = [
                       {

@@ -6,7 +6,7 @@ Ext.define('SIS.view.user.Add', {
     title: '添加成员',
     layout: 'fit',
     autoShow: true,
-
+    modal: true,
   
     initComponent:function() {
         this.items = [

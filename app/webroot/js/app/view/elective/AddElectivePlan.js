@@ -7,7 +7,7 @@ Ext.define('SIS.view.elective.AddElectivePlan', {
     title: '添加选修课课时计划',
     layout: 'fit',
     autoShow: true,
-
+    modal: true,
   
     initComponent:function() {
         this.items = [

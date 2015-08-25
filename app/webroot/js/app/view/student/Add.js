@@ -8,6 +8,7 @@ Ext.define('SIS.view.student.Add', {
     bodyPadding: 10,
     frame: true,
     autoShow: true,
+    modal: true,
     initComponent:function() {
     	var statusData=[
     	     [1,'正常'],

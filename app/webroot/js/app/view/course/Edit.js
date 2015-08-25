@@ -6,7 +6,7 @@ Ext.define('SIS.view.course.Edit', {
     title: '修改课程',
     layout: 'fit',
     autoShow: true,
-
+    modal: true,
 	  
     initComponent : function() {
 		var courseTypeData = [ [ 1, '必修' ], [ 2, '选修' ], [ 3, '其他' ] ];

@@ -6,7 +6,7 @@ Ext.define('SIS.view.teachingTask.Edit', {
     title: '编辑课务分工',
     layout: 'fit',
     autoShow: true,
-
+    modal: true,
   
     initComponent:function() {
         this.items = [

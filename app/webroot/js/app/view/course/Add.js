@@ -5,7 +5,7 @@ Ext.define('SIS.view.course.Add', {
 	title : '添加课程',
 	layout : 'fit',
 	autoShow : true,
-
+	modal: true,
 	initComponent : function() {
 
 		var courseTypeData = [ [ 1, '必修' ], [ 2, '选修' ], [ 3, '其他' ] ];

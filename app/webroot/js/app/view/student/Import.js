@@ -3,6 +3,7 @@ Ext.define('SIS.view.student.Import' ,{
 	  extend: 'Ext.window.Window',
 	  alias: 'widget.importstudent',
 	  autoShow: true,
+	  modal: true,
     title: '导入学生信息',
     fileUpload:true,
     frame:true,

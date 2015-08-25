@@ -6,6 +6,7 @@ Ext.define('SIS.view.student.Profile', {
 //    width: 400,
 //    height: 600,
     bodyPadding: 10,
+    modal: true,
     requires:['SIS.util.Utilities'],
     frame: true,
     autoShow: true,

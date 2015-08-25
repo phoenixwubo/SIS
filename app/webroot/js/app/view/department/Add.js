@@ -6,7 +6,7 @@ Ext.define('SIS.view.department.Add', {
     title: '添加机构',
     layout: 'fit',
     autoShow: true,
-
+    modal: true,
   
     initComponent:function() {
         this.items = [
