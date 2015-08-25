@@ -11,6 +11,7 @@ Ext.define('SIS.controller.Electives', {
            'elective.Selector',
            'elective.ResultList',
            'elective.NoexamResultList',
+           'elective.Import',
            'toolbar.FilteElectiveCourse'
 
 
@@ -30,6 +31,9 @@ Ext.define('SIS.controller.Electives', {
     			
     		'electivelist #filter':{
     			click:this.onElectiveListFilter
+    		},
+    		'electivelist #import':{
+    			click:this.onImportElective
     		},
     		'electivelesson #add ':{
     			click:this.addelectiveplanForm
@@ -52,6 +56,9 @@ Ext.define('SIS.controller.Electives', {
     		courseStore=course.getStore();
     		courseStore.isFiltered() ? courseStore.clearFilter(true) : '';
     		courseStore.filter('course_type',2);
+    		var toolbar=grid.down('toolbar');
+        	var button=new Ext.Button({text:'导入学生选课信息',itemId:'import',iconCls:'import'});
+        	toolbar.add(button);
     	},
     	onElectiveListFilter:function(button){
     		grid=button.up('grid');
@@ -65,6 +72,9 @@ Ext.define('SIS.controller.Electives', {
             Ext.apply(store.proxy.extraParams, new_params);
             store.load();
             grid.bindStore(store);
+    	},
+    	onImportElective:function(){
+    		var importElective=Ext.widget('importelective');
     	},
     	addelectiveplanForm:function(){
     		var view = Ext.widget('addelectiveplan');

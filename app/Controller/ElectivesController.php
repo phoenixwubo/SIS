@@ -2,6 +2,7 @@
 App::uses('AppController', 'Controller');
 App::import('Model','Department');
 App::import('Model','Student');
+App::import('Vendor','excel_reader2');
 /**
  * Electives Controller
  *
@@ -23,7 +24,7 @@ class ElectivesController extends AppController {
  * @return void
  */
 	public function index($course_type=null,$department_id=null,$semester_id=null,$course_id=null) {
-		$option=array();
+		$conditions=array();
 		if(isset($this->request->query ['department_id']) && !(($this->request->query ['department_id']=='')))
 		{
 			$department_id = $this->request->query ['department_id'];
@@ -35,14 +36,14 @@ class ElectivesController extends AppController {
 		if(isset($this->request->query ['semester_id']) && !(($this->request->query ['semester_id']=='')))
 		{
 			$semester_id = $this->request->query ['semester_id'];
-			$option['conditions']['semester_id']=$semester_id;
+			$conditions['semester_id']=$semester_id;
 		}
 		if(isset($this->request->query ['course_id']) && !(($this->request->query ['course_id']=='')))
 		{
 			$course_id = $this->request->query ['course_id'];
-			$option['conditions']['course_id']=$course_id;
+			$conditions['course_id']=$course_id;
 		}
-		if($course_type!=null) $option['conditions']['Elective.course_type'] =$course_type;
+		if($course_type!=null) $conditions['Elective.course_type'] =$course_type;
 		if($department_id!=null) 
 		{
 
@@ -53,18 +54,21 @@ class ElectivesController extends AppController {
 			
 // 			debug($department);
 			$dept_number=$department['Department']['dept_number'];
-			$option['conditions']['Elective.dept_number like ']=$dept_number.'%';
-			$this->Paginator->settings=$option;
+			$conditions['Elective.dept_number like ']=$dept_number.'%';
 		}
 		$this->Elective->recursive = 0;
 		$success=true;
-
+		
+		$this->Paginator->settings['conditions']=$conditions;
 		$page= $this->request->query['page'];
 		$limit= $this->request->query['limit'];
 		$this->Paginator->settings['page']=$page;
 		$this->Paginator->settings['limit'] = $limit;
 // 		$this->set('electives',$this->Elective->find('all'));
-		$this->set('electives', $this->Paginator->paginate());
+// 		
+		$electives=$this->Paginator->paginate();
+// 		debug($this->Paginator->settings);
+		$this->set('electives', $electives);
 		$this->set('success',$success);
 		$this->layout='ajax';
 	}
@@ -239,4 +243,246 @@ class ElectivesController extends AppController {
 			$this->set(compact('success','electives'));
 		}
 	}
+	public function rm($name)
+	
+	{
+		$temp_arr = explode(".", $name);
+		$file_ext = array_pop($temp_arr);
+		$file_ext = trim($file_ext);
+		$file_ext = strtolower($file_ext);
+		return strtotime("now").".".$file_ext;
+	
 	}
+	
+	public function showXls($file)
+	{
+	
+	
+		/* 从Department表中查询dept_id */
+		// 		$this->loadModel('Department');//
+		//$dept=$this->Department->findByDept_name('2014级高中1班');
+	
+		$data = new Spreadsheet_Excel_Reader();
+		$data->setOutputEncoding('utf-8');
+		$data->read($file);
+		// 		print_r($data);//输出excel数据
+		error_reporting(E_ALL ^ E_NOTICE);
+		$arr = array();
+		$cols=array();
+		$numCols=$data->sheets[0]['numCols'];
+		$numRows=$data->sheets[0]['numRows'];
+	
+		/* 输出行列 */
+		// 		echo '共计' .$numRows.'行,共计列数：'.$numCols;
+		for($c=1;$c<=$numCols;$c++){
+			switch($data->sheets[0]['cells'][1][$c])
+			{
+				case '姓名':
+					$cols[$c]="stu_name";
+					// 					debug($cols[$c]);
+					break;
+						
+				case "性别":
+					$cols[$c]="gender";
+					break;
+						
+				case "出生日期":
+					$cols[$c]="dob";
+					break;
+						
+				case "身份证号":
+					$cols[$c]="id_card_number";
+					break;
+						
+				case "学号":
+					$cols[$c]="stu_number";
+					break;
+						
+				case "班级":
+					$cols[$c]="dept_number";
+					break;
+	
+	
+				case '籍贯':
+					$cols[$c]='native_place';
+					break;
+	
+				case '民族':
+					$cols[$c]='nationality';
+					break;
+	
+				case '家庭地址':
+					$cols[$c]='address';
+					break;
+	
+				case '联系电话1':
+					$cols[$c]='parent_phone1';
+					break;
+	
+				case '联系电话2':
+					$cols[$c]='parent_phone2';
+					break;
+	
+				case '学籍':
+					$cols[$c]='status';
+					break;
+				case '课程名称':
+						$cols[$c]='course';
+						break;
+				default:
+					$cols[$c]=$data->sheets[0]['cells'][1][$c];
+	
+			}
+			/* 输出原来的字段名  */
+			// 				$cols[$c]=$data->sheets[0]['cells'][1][$c];
+		}
+		// 		debug($cols);
+	
+		/* 以表格形式输出结果 */
+		// 		echo '<table>';
+	
+		/* 测试导入3行 */
+		// 		$count=0;
+		//for ($i = 2; $i <= 32; $i++) {
+		for ($i = 2; $i <= $numRows; $i++) {
+			// 			echo '<tr>';
+			// 			$count++;
+			// 			echo '第'.$count.':次<br>';
+			for ($j = 1;$j <= $numCols; $j++) {
+	
+				// 				echo '<td>';
+				switch($cols[$j]){
+					case "gender":
+						switch($data->sheets[0]['cells'][$i][$j]){
+							case "男":
+								$arr[$i][$cols[$j]]=1;
+								break;
+							case "女":
+								$arr[$i][$cols[$j]]=2;
+								break;
+							default:
+								$arr[$i][$cols[$j]]=1;
+	
+						}
+						break;
+	
+					case "status":
+						if(!isset($data->sheets[0]['cells'][$i][$j])){
+							break;
+						}else{
+							switch($data->sheets[0]['cells'][$i][$j]){
+								case "正常":
+									$arr[$i][$cols[$j]]=1;
+									break;
+								case "旁听":
+									$arr[$i][$cols[$j]]=4;
+									break;
+								default:
+									$arr[$i][$cols[$j]]=1;
+	
+							}
+							break;
+						}
+							
+							
+	
+					default:
+						if(isset($data->sheets[0]['cells'][$i][$j]))
+						{
+							$arr[$i][$cols[$j]] =$data->sheets[0]['cells'][$i][$j];
+						}
+						else
+						{
+							/* 不处理，默认为空 */
+							// 							$arr[$i][$cols[$j]] =NULL;
+							// 							echo $i."空".$j;
+						}
+						/*输出每个数组元素  */
+						/* 	if(isset($arr[$i][$cols[$j]])){
+						 echo $arr[$i][$cols[$j]];
+						 } */
+	
+	
+						// 				echo "</td>";
+				}
+				// 				echo "</tr>";
+				// 				echo "<br>";
+	
+			}
+			}
+			// 				echo '</table>';
+			/* 输出数组 */
+			// 			debug ($arr);
+			return $arr;
+	
+	
+		}
+	
+		public function import(){
+			// 		debug($_FILES);
+			$this->layout='ajax';
+	
+
+	
+				//* 	extjs的上传 */
+				if($this->request->is('post')){
+					if ($_FILES['import']['error'] > 0)
+					{
+						$error  = $_FILES['import']['error'];
+						$response = array('success' => false, 'msg' => $error);
+						echo json_encode($response);
+					}
+					else
+	
+	
+					{
+						$file_name = $_FILES['import']['name'];
+						$file_type = $_FILES['import']['type'];
+						$file_size = round($_FILES['import']['size'] / 1024, 2) . '  Kilo Bytes';
+						$uploaddir = WWW_ROOT."uploads/";
+						//debug(WWW_ROOT);
+						/*取时间戳为文件名*/
+						$name=basename($_FILES['import']['name']);
+						$name=$this->rm($name);
+						//debug($name);
+						$uploadfile = $uploaddir.$name;
+							
+							
+						// 			/*取原名为文件名*/
+						//$uploadfile = $uploaddir . basename($_FILES['import']['name']);
+							
+						/* 如果上传文件名有乱码 */
+						/* $uploadfile=iconv("utf-8","GBK", $uploadfile); */
+							
+							
+						if (move_uploaded_file($_FILES['import']['tmp_name'], $uploadfile)) {
+							// 					echo "File is valid, and was successfully uploaded.\n";}
+							//debug($uploadfile);
+							$data=$this->showXls($uploadfile);
+							$dataLength=count($data);
+							// 			debug($data);
+// 							if($this->Elective->saveAll($data)){
+// 								// 						echo 'ok';
+// 								$success=true;
+	
+									
+// 							}else {
+// 								// 					echo 'no';
+// 								$success=false;
+// 							}
+							$response = array('success' =>true,
+									'data' => array('name' => $file_name, 'size' => $file_size),
+									'msg' => '上传成功并导入了'.$dataLength.'条记录'
+							);
+							echo json_encode($response);
+						}
+					}
+				}
+	
+				die();
+	}
+}
+	
+	
+	
+	
