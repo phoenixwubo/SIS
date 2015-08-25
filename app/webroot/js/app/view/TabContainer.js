@@ -8,7 +8,7 @@ Ext.define('SIS.view.TabContainer', {
     alias : 'widget.tabcontainer', 
     items: [	
             	{
-    	xtype:'electivelist'
+    	xtype:'studentlist'
     },
             	{
     	xtype:'tabhome'

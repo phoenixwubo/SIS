@@ -61,6 +61,9 @@ Ext.define('SIS.controller.Students', {
 		'studentlist button#search':{
 			click:this.searchStudent
 		},
+		'studentlist button#import':{
+			click:this.onImportStudents
+		},
 		'studentchart button#download':{
 			click:this.onChartDownload
 		},
@@ -197,9 +200,12 @@ Ext.define('SIS.controller.Students', {
     	console.log(key);
     }
     ,
-    onPanelRendered: function() {
-        console.log('The student panel was rendered');
+    onPanelRendered: function(panel) {
+//        console.log('The student panel was rendered');
         //console.log(this.stores);
+    	var toolbar=panel.down('toolbar');
+    	var button=new Ext.Button({text:'导入',itemId:'import',iconCls:'import'});
+    	toolbar.add(button);
         var store = this.getStudentsStore();
         store.reload();
         this.getStore('Students').autoLoad=true;
@@ -292,7 +298,7 @@ Ext.define('SIS.controller.Students', {
     }
     ,
     onChartDownload:function(itme,e,option){
-    	console.log('下载！');
+//    	console.log('下载！');
     	var panel=itme.up('panel');
     	var chart=panel.down('chart')
     	console.log(chart);
@@ -303,5 +309,9 @@ Ext.define('SIS.controller.Students', {
                  });
              }
          });
+    },
+    onImportStudents:function(button){
+    	var importStudent=Ext.widget('importstudent');
+    	console.log(importStudent);
     }
   });

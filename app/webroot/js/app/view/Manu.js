@@ -21,11 +21,11 @@ Ext.define('SIS.view.Manu', {
 					text:'学生名单',
 					id:'studentlist',
 					leaf:true
-				},{
+				}/*,{
 					text:'批量导入',
 					leaf:true,
 					id:'importstudent'
-				}/*,{
+				},{
 					text:'生源地统计',
 					leaf:true,
 					id:'studentstat'

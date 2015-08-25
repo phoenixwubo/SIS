@@ -1,7 +1,8 @@
 Ext.define('SIS.view.student.Import' ,{
-    extend: 'Ext.form.FormPanel',
-    alias: 'widget.importstudent',
-    
+//    extend: 'Ext.form.FormPanel',
+	  extend: 'Ext.window.Window',
+	  alias: 'widget.importstudent',
+	  autoShow: true,
     title: '导入学生信息',
     fileUpload:true,
     frame:true,
