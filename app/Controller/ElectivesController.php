@@ -508,6 +508,7 @@ class ElectivesController extends AppController {
 // 							debug($options);
 							$stu_electiv_namelist=$this->Elective->find('all',$options);
 // 							debug($stu_electiv_namelist);
+								$num_of_success=0;
 							$data=array();
 							foreach ($stu_electiv_namelist as $idx=>$record){
 // 								debug($student_record);
@@ -517,6 +518,8 @@ class ElectivesController extends AppController {
 								$data[$idx]['stu_number']=$stu_number;
 								if(isset($elective_data[$stu_number])){
 									$data[$idx]['course_id']=$elective_data[$stu_number];
+									$elective_data[$stu_number]==0? : ($num_of_success++) ;
+									
 								}
 							}
 // 							debug($data);
@@ -531,7 +534,7 @@ class ElectivesController extends AppController {
 							}
 							$response = array('success' =>true,
 									'data' => array('name' => $file_name, 'size' => $file_size),
-									'msg' => '上传成功并导入了'.$dataLength.'条记录'
+									'msg' => '上传了'.$dataLength.'条记录,成功导入了'.$num_of_success.'条记录。'
 							);
 							echo json_encode($response);
 						}
