@@ -226,7 +226,7 @@ Ext.define('SIS.controller.CoursePlans', {
         	});
 //        	store2.model=store.getProxy().getModel();
         	store2.add(records);
-//        	store.clearFilter();
+        	store.clearFilter();
         	store2.filter('course_type',value);
         	courseCombo.bindStore(store2);
         	console.log(store2);

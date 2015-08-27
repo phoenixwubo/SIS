@@ -8,17 +8,17 @@ Ext.define('SIS.view.TabContainer', {
     alias : 'widget.tabcontainer', 
     items: [	
             	{
-    	xtype:'studentlist'
+    	xtype:'electivelist'
     },
             	{
     	xtype:'tabhome'
-    },{
+    }/*,{
     	xtype:'userlist',
     	iconCls:'users',
     	title:'用户信息',
     	id:'userlist',
     	closable: false,
-    }/**/
+    }*/
     ],
     dockedItems: {
         dock: 'bottom',

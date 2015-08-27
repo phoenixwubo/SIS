@@ -254,7 +254,7 @@ class ElectivesController extends AppController {
 	
 	}
 	
-	public function showXls($file)
+	public function showXls($file,$department_id=null,$semester_id=null)
 	{
 	
 	
@@ -326,9 +326,12 @@ class ElectivesController extends AppController {
 				case '学籍':
 					$cols[$c]='status';
 					break;
-				case '课程名称':
+				case '选修名称':
 						$cols[$c]='course';
 						break;
+				case '成绩':
+					$cols[$c]='result';
+					break;
 				default:
 					$cols[$c]=$data->sheets[0]['cells'][1][$c];
 	
@@ -342,16 +345,32 @@ class ElectivesController extends AppController {
 		// 		echo '<table>';
 	
 		/* 测试导入3行 */
-		// 		$count=0;
-		//for ($i = 2; $i <= 32; $i++) {
+		App::import('Controller','CoursePlans');
+		$CoursePlan=new CoursePlansController();
+		$coursepalns=$CoursePlan->listCoursePlans($department_id,$semester_id,null,2,true);
+		$courseList=array();
+		foreach ($coursepalns as $courseplan){
+			$course_name=$courseplan['Course']['course_name'];
+			$course_id=$courseplan['Course']['id'];
+			$courseList[$course_name]=$course_id;
+		}
+// 		debug($courseList);
 		for ($i = 2; $i <= $numRows; $i++) {
 			// 			echo '<tr>';
 			// 			$count++;
-			// 			echo '第'.$count.':次<br>';
 			for ($j = 1;$j <= $numCols; $j++) {
 	
 				// 				echo '<td>';
 				switch($cols[$j]){
+					case "course":
+						$course_name=$data->sheets[0]['cells'][$i][$j];
+						if(isset($courseList[$course_name])){
+						$course_id=$courseList[$course_name];}
+						else{
+							$course_id=0;
+						}
+						$arr[$i][$cols[$j]]=$course_id;
+						break;
 					case "gender":
 						switch($data->sheets[0]['cells'][$i][$j]){
 							case "男":
@@ -418,7 +437,7 @@ class ElectivesController extends AppController {
 	
 		}
 	
-		public function import(){
+		public function import($department_id=null,$semester_id=null){
 			// 		debug($_FILES);
 			$this->layout='ajax';
 	
@@ -458,18 +477,58 @@ class ElectivesController extends AppController {
 						if (move_uploaded_file($_FILES['import']['tmp_name'], $uploadfile)) {
 							// 					echo "File is valid, and was successfully uploaded.\n";}
 							//debug($uploadfile);
-							$data=$this->showXls($uploadfile);
+							$data=$this->showXls($uploadfile,$department_id,$semester_id);
 							$dataLength=count($data);
-							// 			debug($data);
-// 							if($this->Elective->saveAll($data)){
-// 								// 						echo 'ok';
-// 								$success=true;
+// 										debug($data);
+										
+							$elective_data=array();
+							foreach ($data as $value){
+								$stu_number=$value['stu_number'];
+								$course_id=$value['course'];
+								$elective_data[$stu_number]=$course_id;
+// 								debug($value);
+							}
+// 							debug($elective_data);
+							$this->Elective->unbindModel(array(
+									'belongsTo'=> array('CoursePlan','Course','Student')
+							));
+							
+							App::import('Controller','CoursePlans');
+							$CoursePlan=new CoursePlansController();
+							$coursepalns=$CoursePlan->listCoursePlans($department_id,$semester_id,null,2,true);
+							foreach ($coursepalns as $courseplan){
+								$courseplan_id[]=$courseplan['CoursePlan']['id'];
+							}
+							$Department = new Department();
+							$depts=$Department->read('dept_number',$department_id);
+							$options = array('conditions' => array(
+									'stu_number like'=> $depts['Department']['dept_number'].'%',
+									'course_plan_id'=>$courseplan_id
+							));
+// 							debug($options);
+							$stu_electiv_namelist=$this->Elective->find('all',$options);
+// 							debug($stu_electiv_namelist);
+							$data=array();
+							foreach ($stu_electiv_namelist as $idx=>$record){
+// 								debug($student_record);
+								$id=$record['Elective']['id'];
+								$stu_number=$record['Elective']['stu_number'];
+								$data[$idx]['id']=$id;
+								$data[$idx]['stu_number']=$stu_number;
+								if(isset($elective_data[$stu_number])){
+									$data[$idx]['course_id']=$elective_data[$stu_number];
+								}
+							}
+// 							debug($data);
+							if($this->Elective->saveAll($data)){
+								// 						echo 'ok';
+								$success=true;
 	
 									
-// 							}else {
-// 								// 					echo 'no';
-// 								$success=false;
-// 							}
+							}else {
+								// 					echo 'no';
+								$success=false;
+							}
 							$response = array('success' =>true,
 									'data' => array('name' => $file_name, 'size' => $file_size),
 									'msg' => '上传成功并导入了'.$dataLength.'条记录'

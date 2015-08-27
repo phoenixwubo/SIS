@@ -88,7 +88,7 @@ class CoursePlansController extends AppController {
 	
 	}
 	
-	public function listCoursePlans($department_id=null,$semester_id=null,$course_id=null) {
+	public function listCoursePlans($department_id=null,$semester_id=null,$course_id=null,$course_type=null,$returnback=null) {
 		if(isset($this->request->query ['department_id']) && !(($this->request->query ['department_id']=='')))
 		{
 			$department_id = $this->request->query ['department_id'];
@@ -136,11 +136,16 @@ class CoursePlansController extends AppController {
 		
 		if($semester_id!=null && $semester_id!='null' ) $condition['conditions']['semester_id']=$semester_id;
 		if($course_id!=null && $course_id!='null') $condition['conditions']['course_id']=$course_id;
+		if($course_type!=null && $course_type!='null') $condition['conditions']['CoursePlan.course_type']=$course_type;
 // 		debug($condition);
 		$condition['order']='course_id';
+		$coursePlans=$this->CoursePlan->find('all',$condition);
+		
+		
 		$this->set('coursePlans', $this->CoursePlan->find('all',$condition));
 		$result['success']=true;
 		$this->set('result',$result);
+		if($returnback==true)		return $coursePlans;
 	}
 
 /**
