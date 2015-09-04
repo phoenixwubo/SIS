@@ -5,6 +5,7 @@ $departmentCount=count($departments);
 ?>
 {
 totalScoreSection:<?php echo $scoreSectionCount?>,
+totalDepartment:<?php echo $departmentCount?>,
 success:true,
 departmentInJson:[
 'section',
@@ -34,7 +35,8 @@ scoreSectionInJson:[
 averageInJson:[
 <?php foreach ($averages as $idx=>$average):?>
 {
-	<?php echo $average['Score']['dept_number']?>:<?php echo $average[0]['average']?>
+	'dept_number':'<?php echo $average['Score']['dept_number']?>',
+	'average':<?php echo $average[0]['average']?>
 }
 <?php echo ($idx<$averages_count-1)?',':'';?>
 <?php endforeach;?>

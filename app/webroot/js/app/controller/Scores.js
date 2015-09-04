@@ -12,7 +12,8 @@ Ext.define('SIS.controller.Scores', {
             'scores.ScoreSections' ,
             'scores.ExamNames',
             'scores.ScoreTables',
-            'scores.SubjectScores'],
+            'scores.SubjectScores',
+            'scores.Averages'],
     views:[
            'score.SubjectScoreList',
            'score.ScoreTable',
@@ -105,7 +106,7 @@ Ext.define('SIS.controller.Scores', {
         	
 //        	var store=this.getStudentsStore();
         	var statStore=this.getScoresScoreSectionsStore();
-        	
+        	var averageStore=this.getScoresAveragesStore();
         	var newUrl='scores/stat_scores_section/'+department_id+'/'+semester_id+'/'+course_id+'/'+exam_name+'/';
         	console.log(newUrl);
         	Ext.Ajax.request({
@@ -116,8 +117,10 @@ Ext.define('SIS.controller.Scores', {
                     var series = [];
                     var chart=button.up('panel').down('chart[id=sectionchart]');
                     var areachart=button.up('panel').down('chart[id=areachart]');
+                    var averagechart=button.up('panel').down('chart[id=averagechart]');
                     chart.surface.removeAll();
                     areachart.surface.removeAll();
+//                    averagechart.surface.removeAll();
                     chart.series.clear();
 //                    console.log(data);
                     areachart.series.clear();
@@ -213,6 +216,7 @@ Ext.define('SIS.controller.Scores', {
                                   
                               );
                           statStore.loadRawData(data.scoreSectionInJson, false);
+                          averageStore.loadRawData(data.averageInJson, false);
                           
                      /* */    },
                         failure: function(response){
