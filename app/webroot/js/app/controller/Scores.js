@@ -18,6 +18,7 @@ Ext.define('SIS.controller.Scores', {
            'score.ScoreTable',
            'toolbar.AddEditDelete',
            'toolbar.Pagenate',
+           'score.Stacked',
           // 'score.SearchResult',
 //           'score.ResultSheet',
 //           'score.ResultList'
@@ -86,14 +87,20 @@ Ext.define('SIS.controller.Scores', {
     	},
     	onStatScore:function(button){
     		
+    		var panelcenter=button.up('panel').down('panel[id=center]');
+
+    		console.log(panelcenter);
         	department_id=button.up('panel').down('#department').getValue();
+        	department=button.up('panel').down('#department').getRawValue();
         	semester_id=button.up('panel').down('#semester').getValue();
+        	semester=button.up('panel').down('#semester').getRawValue();
         	course_id=button.up('panel').down('#course').getValue();
+        	course=button.up('panel').down('#course').getRawValue();
         	exam_name=button.up('panel').down('#exam').getValue();
-        	console.log(department_id,semester_id,course_id,exam_name);
+        	exam=button.up('panel').down('#exam').getRawValue();
+        	console.log(department,semester,course,exam);
         	var dept_number;
 
-    		
 //        	http://stackoverflow.com/questions/21171049/dynamically-generate-axis-and-series-in-extjs-4
         	
 //        	var store=this.getStudentsStore();
@@ -107,10 +114,15 @@ Ext.define('SIS.controller.Scores', {
                     var data = Ext.decode(response.responseText);
                     statStore.model.setFields(data.departmentInJson);
                     var series = [];
-                    var chart=button.up('panel').down('chart');
+                    var chart=button.up('panel').down('chart[id=sectionchart]');
+                    var areachart=button.up('panel').down('chart[id=areachart]');
                     chart.surface.removeAll();
+                    areachart.surface.removeAll();
                     chart.series.clear();
 //                    console.log(data);
+                    areachart.series.clear();
+                    var fields=[];
+                    var titles=[];
                      for(var field in data.departmentInJson){
                        if(data.departmentInJson[field] !== 'section'){
                            chart.series.add({
@@ -131,17 +143,50 @@ Ext.define('SIS.controller.Scores', {
                                    hideDelay: 0,
                                    renderer: function(storeItem, item) {
                                 	   var title = item.series.title;
-                                       this.setTitle(title+'班'+storeItem.get('section') + '分数段: ' + storeItem.get(item.series.yField)+ '人');
+                                       this.setTitle(title+'班'+storeItem.get('section') + '分数段:' + storeItem.get(item.series.yField)+ '人');
                                    }
                                },
                                yField:data.departmentInJson[field]
                            });
 
                            series.push(data.departmentInJson[field]);
-                           
+                           fields.push(data.departmentInJson[field]);
+                           titles.push(data.departmentInJson[field]);
+           
                            
                     }
                      }
+                    var areachartseries=[{
+
+                        type: 'area',
+                        axis: 'left',
+                        title: titles,
+                        xField: 'section',
+                        yField: fields,
+                        style: {
+                            opacity: 0.80
+                        },
+                        highlight: {
+                            fill: '#000',
+                            'stroke-width': 2,
+                            stroke: '#fff'
+                        },
+                        tips: {
+                            trackMouse: true,
+                            style: 'background: #FFF',
+                            height: 20,
+                            width : 150,
+                            renderer: function(storeItem, item) {
+                            	
+                                var department = item.series.title[Ext.Array.indexOf(item.series.yField, item.storeField)];
+                                console.log(department);
+                                this.setTitle(department + '班' + storeItem.get('section') + '分数段:' + storeItem.get(item.storeField) + '人');
+                            }
+                        }
+                    
+                    }];
+                    areachart.series.add(areachartseries);
+                    
                            var mAxes = chart.axes.items;
 //                           	console.log(mAxes);
                            for(var axis in mAxes){
@@ -154,9 +199,21 @@ Ext.define('SIS.controller.Scores', {
                          chart.axes.items = [];
                            chart.axes.items = mAxes;
                           chart.bindStore(statStore);
+                          
                           chart.redraw();
                           chart.refresh();
+                          chart.surface.add({type  : 'text',
+                                  text  : 'Area Charts - Stacked Area',
+                                  font  : '22px Helvetica',
+                                  width : 100,
+                                  height: 30,
+                                  x : 40, //the sprite x position
+                                  y : 12  //the sprite y position
+                                  }
+                                  
+                              );
                           statStore.loadRawData(data.scoreSectionInJson, false);
+                          
                      /* */    },
                         failure: function(response){
                             Ext.Msg.alert('Error',response);

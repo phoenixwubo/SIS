@@ -6,13 +6,13 @@ Ext.define('SIS.view.TabContainer', {
         bodyPadding: 10
     },
     alias : 'widget.tabcontainer', 
-    items: [	
+    items: [{
+    	xtype:'scoresectionchart'
+    },	
             	{
-    	xtype:'electivelist'
-    },
-            	{
-    	xtype:'tabhome'
-    }/*,{
+    	xtype:'stacked'
+    }
+            	/*,{
     	xtype:'userlist',
     	iconCls:'users',
     	title:'用户信息',

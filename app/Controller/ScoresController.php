@@ -603,15 +603,33 @@ class ScoresController extends AppController {
 							'dept_number','section'
 					) ,
 					'conditions'=>array('course_plan_id'=>$courseplan_id),
-					'order'=>array('dept_number DESC'),
+					'order'=>array('dept_number ASC'),
 			);
 			 if(isset($filer_dept_number)){
 			 	$condition['conditions']['Score.dept_number'] = $filer_dept_number;
 			 }
 			// 'conditions'=>array($conditions)
 // 			debug($condition);
+
+// 			根据条件从数据库中提取数据处理为分数段
 			$sections = $this->Score->find ( 'all', $condition );
-// 					debug($sections);
+			
+// 			设定用数据库处理平均分的条件
+			$condition_average = array (
+					'fields' => array (
+							'dept_number',
+// 							'('.$exam_name.' div 10) AS section',
+							'AVG('.$exam_name.') AS average'
+					),
+					'group' => array (
+							'dept_number'
+					) ,
+					'conditions'=>array('course_plan_id'=>$courseplan_id),
+					'order'=>array('dept_number ASC'),
+			);
+// 			根据条件由数据库处理得到平均分
+			$averages=$this->Score->find ( 'all', $condition_average );
+// 					debug($averages);
 			
 			/* 查找所有的班级 */
 			$condition = array (
@@ -633,6 +651,7 @@ class ScoresController extends AppController {
 			$departments = $this->Score->find ( 'all', $condition );
 			// 		debug($departments);
 			
+			//如果查询结果为空
 			if(count($sections)==0)
 			{
 				$sections[0][0]=array(
@@ -709,6 +728,7 @@ class ScoresController extends AppController {
 		$this->set ( 'scoreSections', $full_score_sections ); 
 		$this->set('departments',$departments);
 		$this->set('maximum',$maximum);
+		$this->set('averages',$averages);
 	}
 }
 // eof
