@@ -118,6 +118,7 @@ Ext.define('SIS.controller.Scores', {
                     var chart=button.up('panel').down('chart[id=sectionchart]');
                     var areachart=button.up('panel').down('chart[id=areachart]');
                     var averagechart=button.up('panel').down('chart[id=averagechart]');
+                    var sectionGrid=button.up('panel').down('grid[id=sectionGrid]');
                     chart.surface.removeAll();
                     areachart.surface.removeAll();
 //                    averagechart.surface.removeAll();
@@ -126,6 +127,10 @@ Ext.define('SIS.controller.Scores', {
                     areachart.series.clear();
                     var fields=[];
                     var titles=[];
+                    var columns=[{
+                		header:'分数段',
+                		dataIndex:'section'
+                	}];
                      for(var field in data.departmentInJson){
                        if(data.departmentInJson[field] !== 'section'){
                            chart.series.add({
@@ -155,6 +160,12 @@ Ext.define('SIS.controller.Scores', {
                            series.push(data.departmentInJson[field]);
                            fields.push(data.departmentInJson[field]);
                            titles.push(data.departmentInJson[field]);
+                           columns.push({
+                        	  header: data.departmentInJson[field],
+                        	  dataIndex:data.departmentInJson[field],
+                        	  
+                        	  
+                           })
            
                            
                     }
@@ -217,6 +228,10 @@ Ext.define('SIS.controller.Scores', {
                               );
                           statStore.loadRawData(data.scoreSectionInJson, false);
                           averageStore.loadRawData(data.averageInJson, false);
+                          sectionGrid.reconfigure(statStore,columns);
+                          
+//                          var sectionGrid
+                          
                           
                      /* */    },
                         failure: function(response){
@@ -355,6 +370,8 @@ Ext.define('SIS.controller.Scores', {
         	
         	
     	},
+    	
+    	//成绩表
     	onGetScoreTable:function(button){
 //    		console.log('成绩过滤');
     		//从combo获得信息
