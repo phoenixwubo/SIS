@@ -7,7 +7,7 @@ Ext.define('SIS.view.TabContainer', {
     },
     alias : 'widget.tabcontainer', 
     items: [{
-    	xtype:'scoresectionchart'
+    	xtype:'studentlist'
     },	
             	{
     	xtype:'stacked'

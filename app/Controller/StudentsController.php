@@ -574,7 +574,7 @@ class StudentsController extends AppController {
 	
 	public function import(){
 // 		debug($_FILES);
-		$this->layout='ajax';		
+// 		$this->layout='ajax';			
 
 
 /* cakephp上传 */
@@ -669,8 +669,65 @@ class StudentsController extends AppController {
 					//debug($uploadfile);
 					$data=$this->showXls($uploadfile);
 					$dataLength=count($data);
-					// 			debug($data);
-				if($this->Student->saveAll($data)){
+					$ics=array();
+					foreach($data as $stu){
+						if(isset($stu['id_card_number']))
+						$ics[]=$stu['id_card_number'];
+					}
+// 					debug($ics);
+					//查询数据库中已经存在数据
+					$data_exist=$this->Student->find('all',array(
+							'conditions'=>array('id_card_number'=>$ics),
+							'fields'=>array('id','id_card_number','stu_number','dept_number','note','logdept')
+							
+					));
+// 					debug($data_exist);
+					$data_import=array();
+					$updateLength=0;
+					foreach($data as $idx=>$stu){
+						if(isset($stu['id_card_number'])){
+							$ic=$stu['id_card_number'];
+							$stu_number=$stu['stu_number'];
+							$dept_number=$stu['dept_number'];
+						
+						foreach ($data_exist as $key=>$stu_exist){
+// 							判读是否是相同身份证号码
+							if($stu_exist['Student']['id_card_number']==$ic){
+// 								如果学号相同，则是更新信息
+								if($stu_number==$stu_exist['Student']['stu_number'])
+								{
+								$stu['id']=$stu_exist['Student']['id'];
+								}
+								else{
+// 									导入的是数据库中信息之后的信息，则更新，且记录学号、班级信息。
+echo '之后';
+									if($stu_number>$stu_exist['Student']['stu_number']){
+										$stu['id']=$stu_exist['Student']['id'];
+										$stu['note']=$stu_exist['Student']['note'].$stu_exist['Student']['stu_number']."&";
+										$stu['logdept']=$stu_exist['Student']['logdept'].$stu_exist['Student']['dept_number']."&";
+												
+									}else{
+										echo '之前';
+// 										如果导入的时数据库中信息之前的信息，则只记录学号、班级信息
+										$stu=array();
+										$stu['id']=$stu_exist['Student']['id'];
+										$stu['note']=$stu_exist['Student']['note'].$stu_number."&";
+										$stu['logdept']=$stu_exist['Student']['logdept'].$dept_number."&";
+											
+										
+									}
+								}
+								$updateLength++;
+							}
+								
+									
+						}
+						}
+						$data_import[]=$stu;
+					}
+// 					debug($data_import);
+					
+				if($this->Student->saveAll($data_import)){
 // 						echo 'ok';
 						$success=true;
 
@@ -681,7 +738,7 @@ class StudentsController extends AppController {
 				}
 				$response = array('success' =>true,
 									'data' => array('name' => $file_name, 'size' => $file_size),
-									'msg' => '上传成功并导入了'.$dataLength.'条记录'
+									'msg' => '上传成功并导入了'.$dataLength.'条记录，其中更新了'.$updateLength.'条记录.'
 									);
 				echo json_encode($response);
 				}

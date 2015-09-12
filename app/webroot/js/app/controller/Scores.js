@@ -129,7 +129,8 @@ Ext.define('SIS.controller.Scores', {
                     var titles=[];
                     var columns=[{
                 		header:'分数段',
-                		dataIndex:'section'
+                		dataIndex:'section',
+                		width : 55
                 	}];
                      for(var field in data.departmentInJson){
                        if(data.departmentInJson[field] !== 'section'){
@@ -163,7 +164,7 @@ Ext.define('SIS.controller.Scores', {
                            columns.push({
                         	  header: data.departmentInJson[field],
                         	  dataIndex:data.departmentInJson[field],
-                        	  
+                        	  width : 55
                         	  
                            })
            

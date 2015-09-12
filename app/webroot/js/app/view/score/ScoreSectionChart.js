@@ -120,7 +120,9 @@ Ext.define('SIS.view.score.ScoreSectionChart', {
 	store:'scores.ScoreSections',
 	id:'sectionGrid',
 	columns:[],
-	defaultWidth : 40,
+	defaults:{
+		width : 65
+	},
 	sortableColumns:false,
 	html: "子元素2",
 
