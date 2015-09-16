@@ -674,57 +674,100 @@ class StudentsController extends AppController {
 						if(isset($stu['id_card_number']))
 						$ics[]=$stu['id_card_number'];
 					}
-// 					debug($ics);
-					//查询数据库中已经存在数据
-					$data_exist=$this->Student->find('all',array(
-							'conditions'=>array('id_card_number'=>$ics),
-							'fields'=>array('id','id_card_number','stu_number','dept_number','note','logdept')
-							
-					));
-// 					debug($data_exist);
+					//准备导入的数据
 					$data_import=array();
+					//统计其中更新的条数
 					$updateLength=0;
-					foreach($data as $idx=>$stu){
-						if(isset($stu['id_card_number'])){
-							$ic=$stu['id_card_number'];
-							$stu_number=$stu['stu_number'];
-							$dept_number=$stu['dept_number'];
-						
-						foreach ($data_exist as $key=>$stu_exist){
-// 							判读是否是相同身份证号码
-							if($stu_exist['Student']['id_card_number']==$ic){
-// 								如果学号相同，则是更新信息
-								if($stu_number==$stu_exist['Student']['stu_number'])
-								{
-								$stu['id']=$stu_exist['Student']['id'];
-								}
-								else{
-// 									导入的是数据库中信息之后的信息，则更新，且记录学号、班级信息。
-echo '之后';
-									if($stu_number>$stu_exist['Student']['stu_number']){
-										$stu['id']=$stu_exist['Student']['id'];
-										$stu['note']=$stu_exist['Student']['note'].$stu_exist['Student']['stu_number']."&";
-										$stu['logdept']=$stu_exist['Student']['logdept'].$stu_exist['Student']['dept_number']."&";
-												
-									}else{
-										echo '之前';
-// 										如果导入的时数据库中信息之前的信息，则只记录学号、班级信息
-										$stu=array();
-										$stu['id']=$stu_exist['Student']['id'];
-										$stu['note']=$stu_exist['Student']['note'].$stu_number."&";
-										$stu['logdept']=$stu_exist['Student']['logdept'].$dept_number."&";
-											
-										
-									}
-								}
-								$updateLength++;
-							}
-								
+// 					debug($data);
+					if(count($ics)==0) {
+					$sns=array();
+// 					 echo "type:没有身份证";
+					foreach($data as $stu){
+						if(isset($stu['stu_number'])) $sns[]=$stu['stu_number'];
+// 						debug($sns);
+						//查询数据库中已经存在数据
+						$data_exist=$this->Student->find('all',array(
+								'conditions'=>array('stu_number'=>$sns),
+								'fields'=>array('id','stu_number','dept_number','logdept')
 									
+						));}
+						foreach ($data as $idx=>$stu){
+							$sn=$stu['stu_number'];
+							$dn=$stu['dept_number'];
+							foreach ($data_exist as $key=>$stu_exist){
+								if($stu_exist['Student']['stu_number']==$sn){
+									$stu=array();
+									$stu['id']=$stu_exist['Student']['id'];
+// 									$stu['logdept']=$stu_exist['Student']['logdept'].$stu_exist['Student']['dept_number'].'&';
+									$stu['dept_number']=$dn;
+									$stu['regroup']=true;
+									$data_import[]=$stu;
+									$updateLength++;
+									
+								}
+							}
 						}
-						}
-						$data_import[]=$stu;
+// 						debug($data_exist);
+						
+					
+					
+					
 					}
+					else{
+						debug($ics);
+						//查询数据库中已经存在数据
+						$data_exist=$this->Student->find('all',array(
+								'conditions'=>array('id_card_number'=>$ics),
+								'fields'=>array('id','id_card_number','stu_number','dept_number','note','logdept')
+									
+						));
+						// 					debug($data_exist);
+						
+						foreach($data as $idx=>$stu){
+							if(isset($stu['id_card_number'])){
+								$ic=$stu['id_card_number'];
+								$stu_number=$stu['stu_number'];
+								$dept_number=$stu['dept_number'];
+						
+								foreach ($data_exist as $key=>$stu_exist){
+									// 							判读是否是相同身份证号码
+									if($stu_exist['Student']['id_card_number']==$ic){
+										// 								如果学号相同，则是更新信息
+										if($stu_number==$stu_exist['Student']['stu_number'])
+										{
+											$stu['id']=$stu_exist['Student']['id'];
+										}
+										else{
+											// 									导入的是数据库中信息之后的信息，则更新，且记录学号、班级信息。
+						
+											if($stu_number>$stu_exist['Student']['stu_number']){
+												// echo '之后';
+												$stu['id']=$stu_exist['Student']['id'];
+												$stu['note']=$stu_exist['Student']['note'].$stu_exist['Student']['stu_number']."&";
+												$stu['logdept']=$stu_exist['Student']['logdept'].$stu_exist['Student']['dept_number']."&";
+						
+											}else{
+												// 										echo '之前';
+												// 										如果导入的时数据库中信息之前的信息，则只记录学号、班级信息
+												$stu=array();
+												$stu['id']=$stu_exist['Student']['id'];
+												$stu['note']=$stu_exist['Student']['note'].$stu_number."&";
+// 												$stu['logdept']=$stu_exist['Student']['logdept'].$dept_number."&";
+												
+													
+						
+											}
+										}
+										$updateLength++;
+									}
+						
+										
+								}
+							}
+							$data_import[]=$stu;
+						}
+						// 					
+					} 
 // 					debug($data_import);
 					
 				if($this->Student->saveAll($data_import)){
