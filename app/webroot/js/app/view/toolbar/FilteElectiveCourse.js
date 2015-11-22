@@ -31,6 +31,17 @@ Ext.define('SIS.view.toolbar.FilteElectiveCourse', {
     	valueField:'id',
     	emptyText:'请选择',
     
+    },{
+    	fieldLabel:'课程类型',
+    	xtype:'combo',
+    	labelWidth : 55,
+    	labelAlign : 'right',
+    	itemId:'course_type',
+    	store:'coursePlans.CourseTypes',
+    	displayField:'course_type',
+    	valueField:'value',
+    	emptyText:'请选择'
+    
     },
     {
     	fieldLabel:'课程名称',

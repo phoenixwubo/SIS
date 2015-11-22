@@ -54,7 +54,7 @@ Ext.define('SIS.view.user.Edit', {
   							xtype:'combo',
   							name:'main_subject',
   							fieldLabel:'主要任教学科',
-  							store:'courses.CoursesList',
+  							store:'Courses',
   							displayField:'course_name',
   							valueField:'id',
   							queryMode:'local'

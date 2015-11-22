@@ -21,10 +21,10 @@ Ext.define('SIS.view.elective.ResultList' ,{
   },
   dockedItems: [
                 {
-                    xtype: 'addeditdeletesearch'
+                    xtype: 'filtelecticourse'
                 },{
               	  xtype:'pagenate',
-              	  store: 'Scores',items:[  
+              	  store: 'electives.Electives',items:[  
               	                         '-', {  
               	                             xtype: 'button',      
               	                             text: '保存',  
@@ -41,9 +41,14 @@ Ext.define('SIS.view.elective.ResultList' ,{
 	      ],
     initComponent: function() {
     	this.columns = [
-    	                     {header: 'ID',  dataIndex: 'id',  flex: 1},  
-    	                     {header: '学期',  dataIndex: 'sem_name',  flex: 1},
-    	                     {header: '课时序号',  dataIndex: 'lesson_number',  flex: 1},
+    	                     {header: 'ID',  dataIndex: 'id'},  
+    	                     {header: '学期',  dataIndex: 'semester_id',  flex: 1,
+ 								renderer : function(value, metaData, record) { // #2
+ 									var semestersStore = Ext.getStore('Semesters');
+ 									var semester = semestersStore.findRecord('id', value);
+ 									return semester != null ? semester.get('sem_name') : value;}
+ 								},
+//    	                     {header: '课时序号',  dataIndex: 'lesson_number',  flex: 1},
     	                     {header: '课程名称',  dataIndex: 'course_id',  flex: 1,
     	                    	 renderer : function(value, metaData, record) { 
     									var coursesStore = Ext.getStore('Courses');

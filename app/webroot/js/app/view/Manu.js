@@ -85,13 +85,14 @@ Ext.define('SIS.view.Manu', {
 					text:'班级考试成绩表查询',
 					leaf:true,
 					id:'scoretable'
-				}
+				}/*
 				,{
 					text:'必修考查课成绩登记修改',
 					leaf:true,
 					id:'noexamresultlist'
-				},{
-					text:'选修课成绩登记修改',
+				}				
+				*/,{
+					text:'考查科目成绩录入修改',
 					leaf:true,
 					id:'electiveresultlist'
 				},{

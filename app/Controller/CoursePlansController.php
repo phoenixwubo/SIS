@@ -45,11 +45,11 @@ class CoursePlansController extends AppController {
 		}
 		
 		if(isset($this->request->query ['score_type'])&& !($this->request->query ['score_type']=='')){
-			($course_type = $this->request->query ['score_type']);
+			($score_type= $this->request->query ['score_type']);
 		}
 		
 		$this->CoursePlan->recursive = 0;
-		$this->layout='ajax';
+// 		$this->layout='ajax';
 		if ($department_id == null || $department_id=='null' ) {
 			$condition = array (
 // 					1 => 1
@@ -77,7 +77,7 @@ class CoursePlansController extends AppController {
 		if($semester_id!=null && $semester_id!='null' ) $condition['conditions']['semester_id']=$semester_id;
 		if($course_id!=null && $course_id!='null') $condition['conditions']['course_id']=$course_id;
 		if($course_type!=null && $course_type!='null') $condition['conditions']['CoursePlan.course_type']=$course_type;
-		if($score_type!=null && $score_type!='null') $condition['conditions']['score_type']=$score_type;
+		if($score_type!=null && $score_type!='null') $condition['conditions']['CoursePlan.score_type']=$score_type;
 		// 		debug($condition);
 		$condition['order']='course_id';
 // 		debug($condition);
@@ -251,7 +251,7 @@ class CoursePlansController extends AppController {
 		
 	} 
 	
-	public function elective($course_plan_id,$course_type,$department_id,$semester_id){
+	public function elective($course_plan_id,$course_id=0,$course_type,$department_id,$semester_id){
 		$Department = new Department();
 		$success=false;
 		$depts=$Department->read('dept_number',$department_id);
@@ -269,6 +269,7 @@ class CoursePlansController extends AppController {
 				'dept_number'=>$student['Student']['dept_number'],
 					'course_plan_id'=>$course_plan_id,
 					'course_type'=>$course_type,
+					'course_id'=>$course_id,
 // 					'department_id'=>$department_id
 			);
 						
@@ -415,6 +416,7 @@ class CoursePlansController extends AppController {
 			}
 		}
 		$course_plan=$this->CoursePlan->findById($course_plan_id);
+		$course_id=$course_plan['CoursePlan']['course_id'];
 		if($course_plan['CoursePlan']['implement']>0){
 			$result['tip']='该课程计划已经部署过';
 // 			echo('该课程计划已经部署过');
@@ -435,7 +437,7 @@ class CoursePlansController extends AppController {
 				case 2:
 						switch ($course_type){
 							case 1:
-								$result['success']=$this->elective($course_plan_id,$course_type,$department_id,$semester_id);
+								$result['success']=$this->elective($course_plan_id,$course_id,$course_type,$department_id,$semester_id);
 								$result['tip']='部署必修考查科目课程计划';
 								break;
 							case 2:

@@ -41,7 +41,7 @@ class ElectivesController extends AppController {
 		if(isset($this->request->query ['course_id']) && !(($this->request->query ['course_id']=='')))
 		{
 			$course_id = $this->request->query ['course_id'];
-			$conditions['course_id']=$course_id;
+			$conditions['Elective.course_id']=$course_id;
 		}
 		if($course_type!=null) $conditions['Elective.course_type'] =$course_type;
 		if($department_id!=null) 
