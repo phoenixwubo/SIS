@@ -56,9 +56,8 @@ Ext.define('SIS.controller.CoursePlans', {
 			
 			},
 			'courseplanlist combo#course_type':{
-			select:this.onFilteCourseType
-		
-		}
+			select:this.onFilteCourseType			}
+					
 			
 			
 			
@@ -231,4 +230,6 @@ Ext.define('SIS.controller.CoursePlans', {
         	courseCombo.bindStore(store2);
         	console.log(store2);
         }
+
+        
 });

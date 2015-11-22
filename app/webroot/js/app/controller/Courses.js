@@ -2,7 +2,7 @@ Ext.define('SIS.controller.Courses', {
     extend: 'Ext.app.Controller',
     
     models: ['Course'],
-    stores:['Courses','Users','Semesters','courses.CoursesList'],
+    stores:['Courses','Users','Semesters','courses.CoursesList','users.UsersList'],
     views:[
            'course.List',
            'toolbar.AddEditDelete',
@@ -39,7 +39,14 @@ Ext.define('SIS.controller.Courses', {
 			},
 			'courselist button#delete':{
 				click:this.onButtonClickDeletetCourse
+			},
+			'addcourse':{
+				beforerender:this.clearUserListFilter
+			},
+			'editcourse':{
+				beforerender:this.clearUserListFilter
 			}
+
     			});
     	},
     	onPanelRendered:function(){
@@ -157,4 +164,13 @@ Ext.define('SIS.controller.Courses', {
         	
         
         },
+        clearUserListFilter:function(){
+        	store=this.getUsersUsersListStore();
+//        	console.log(store);
+//				   user_combo=combo.up('window').down('form combo[name=user_id]');
+				 store.isFiltered() ? store.clearFilter() :'' ;
+//				console.log("清除过滤条件");
+			  
+
+        }
 });

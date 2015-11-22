@@ -7,12 +7,12 @@ Ext.define('SIS.view.TabContainer', {
     },
     alias : 'widget.tabcontainer', 
     items: [{
-    	xtype:'studentlist'
-    },	
+    	xtype:'tabhome'
+    }/*,	
             	{
     	xtype:'stacked'
     }
-            	/*,{
+            	,{
     	xtype:'userlist',
     	iconCls:'users',
     	title:'用户信息',

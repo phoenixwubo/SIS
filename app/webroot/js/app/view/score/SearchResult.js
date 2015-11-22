@@ -27,7 +27,7 @@ Ext.define('SIS.view.score.SearchResult' ,{
 //        };
 		
         this.columns = [
-            {header: 'ID',  dataIndex: 'id',  flex: 1}, 
+//            {header: 'ID',  dataIndex: 'id',  flex: 1}, 
             {header:'学期'},
             {header: '课程名称',  dataIndex: 'course_plan_id',  flex: 1,
             	renderer : function(value, metaData, record) { // #2
@@ -36,14 +36,14 @@ Ext.define('SIS.view.score.SearchResult' ,{
 					return courseinfo != null ? courseinfo.get('course_info') : value;
 				}},            
             {header: '学号',  dataIndex: 'stu_number',  flex: 1},
-            {header: '姓名',dataIndex: 'stu_number',
-            	renderer : function(value, metaData, record) { // #2
-					var studentsStore = Ext.getStore('Students');
-					//console.log(studentSore);
-					var student = studentsStore.findRecord('stu_number', value);
-					return student != null ? student.get('stu_name') : value;
-				}
-            },
+//            {header: '姓名',dataIndex: 'stu_number',
+//            	renderer : function(value, metaData, record) { // #2
+//					var studentsStore = Ext.getStore('Students');
+//					//console.log(studentSore);
+//					var student = studentsStore.findRecord('stu_number', value);
+//					return student != null ? student.get('stu_name') : value;
+//				}
+//            },
             {header:'平时',dataIndex:'regular',
             	editor: {
                     xtype: 'numberfield',

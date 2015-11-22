@@ -38,8 +38,9 @@ Ext.define('SIS.view.course.Add', {
 				name : 'user_id',
 				displayField : 'fullname',
 				valueField : 'id',
-				queryMode : 'remote',
-				store : 'Users'
+				queryMode:'local',
+				store : 'users.UsersList',
+				listener:{}
 
 			}, {
 				xtype : 'combobox',

@@ -26,6 +26,7 @@ Ext.define('SIS.view.coursePlan.Add', {
     								   course_combo=field.up('window').down('form combo[name=course_id]');
     								   store=course_combo.getStore();
     								 store.isFiltered() ? store.clearFilter() :'' ;
+    								
     								   store.filter({
     									 property:  'course_type',
     									  value: value,
@@ -43,34 +44,44 @@ Ext.define('SIS.view.coursePlan.Add', {
   							items:[{boxLabel:'考试',name:'score_type',inputValue:'1',checked:'true'},
   							       {boxLabel:'考查',name:'score_type',inputValue:'2'}]
   						},
-          			             {
-          							xtype : 'combobox',
-          							fieldLabel : '课程名称',
-          							name : 'course_id',
-          							displayField:'course_name',
-          							valueField:'id',
-          							queryMode:'local',
-          							store:'Courses',
-          							listeners:{
-          							   select:function(combo,record,opts) { 
+		             {
+						xtype : 'combobox',
+						fieldLabel : '课程名称',
+						name : 'course_id',
+						displayField:'course_name',
+						valueField:'id',
+						queryMode:'local',
+						store:'Courses',
+						listeners:{
+						   select:function(combo,record,opts) { 
 //          							      alert( record[0].get("value"));
 //          							      alert( record[0].get("text"));
-          								   value=Number(combo.getValue());
-          								   
-          								   user_combo=combo.up('window').down('form combo[name=user_id]');
-          								   store=user_combo.getStore();
-          								 store.isFiltered() ? store.clearFilter() :'' ;
-          								   store.filter({
-          									 property:  'main_subject',
-          									  value: value,
-          									  exactMatch: true,
-          									  caseSensitive: true
-          									  
-          								   });
-          							   } 
-          							  }   
-          			
-          						}, {
+							   value=Number(combo.getValue());
+							   course_radio=combo.up('window').down('form radio[name=course_type]');
+
+							   user_combo=combo.up('window').down('form combo[name=user_id]');
+							   store=user_combo.getStore();
+							 store.isFiltered() ? store.clearFilter() :'' ;
+							   //选修不过滤
+							   
+							   if(course_radio.getGroupValue()==1){
+								   console.log('是1');
+								
+								   store.filter({
+									 property:  'main_subject',
+									  value: value,
+									  exactMatch: true,
+									  caseSensitive: true
+									  
+								   });
+							   }else{
+								   console.log('不是1');
+							   }
+						
+						   } 
+						  }   
+		
+					}, {
           							xtype : 'combobox',
           			
           							fieldLabel : '任课教师',

@@ -57,12 +57,12 @@ Ext.define('SIS.view.Manu', {
     				leaf:true,
     				id:'teachingtasklist'
     			},
-    			{
+    			/*{
     				text:'选修课课程计划',
     				leaf:true,
     				id:'electivelesson'
     				
-    			},
+    			},*/
     			{
     				text:'选修课学生名单',
     				leaf:true,
@@ -77,17 +77,17 @@ Ext.define('SIS.view.Manu', {
 	        rootVisible:false,
 	        root:{
 				children:[{
-					text:'必修课成绩录入修改（考试科目）',
+					text:'考试成绩录入修改',
 					leaf:true,
 					id:'subjectscorelist'
 				},
 				{
-					text:'班级成绩表查询（考试科目）',
+					text:'班级考试成绩表查询',
 					leaf:true,
 					id:'scoretable'
 				}
 				,{
-					text:'必修课成绩登记修改（考查科目）',
+					text:'必修考查课成绩登记修改',
 					leaf:true,
 					id:'noexamresultlist'
 				},{
@@ -95,11 +95,11 @@ Ext.define('SIS.view.Manu', {
 					leaf:true,
 					id:'electiveresultlist'
 				},{
-					text:'成绩记录查询',
+					text:'学生成绩记录查询',
 					leaf:true,
 					id:'resultsheet'
 				},{
-					text:'成绩分析',
+					text:'考试成绩分析',
 					leaf:true,
 					id:'scoresectionchart',
 					iconCls:'chart',

@@ -41,7 +41,7 @@ Ext.define('SIS.view.course.Edit', {
           							displayField:'fullname',
           							valueField:'id',
           							queryMode:'local',
-          							store:'Users'
+          							store : 'users.UsersList',
           			
           						}, {
           							xtype : 'combobox',

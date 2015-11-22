@@ -1,7 +1,7 @@
 Ext.define('SIS.view.semester.Add', {
     extend: 'Ext.window.Window',
     alias: 'widget.addsemester',
-    title: 'New Semester',
+    title: '添加学期',
     layout: 'fit',
     //width: 200,
     //height: 200,
