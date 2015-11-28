@@ -87,8 +87,24 @@ class CoursePlansController extends AppController {
 		$this->set('result',$result);
 	
 	}
-	
-	public function listCoursePlans($department_id=null,$semester_id=null,$course_id=null,$course_type=null,$returnback=null) {
+	public function listAllCoursePlans($course_type=null){
+		if($course_type==null){
+			$conditons=array();
+		}else{
+			$conditons=array(	
+					'conditions'=>array(
+							'CoursePlan.course_type' => $course_type
+					)
+			);
+		}
+		
+		$allCoursePlans=$this->CoursePlan->find('all',$conditons);
+		
+		return $allCoursePlans;
+// 		debug($allCoursePlans);
+		
+	}
+	public function listCoursePlans($department_id=null,$semester_id=null,$course_id=null,$course_type=null,$returnback=null,$score_type=null) {
 		if(isset($this->request->query ['department_id']) && !(($this->request->query ['department_id']=='')))
 		{
 			$department_id = $this->request->query ['department_id'];
@@ -137,6 +153,7 @@ class CoursePlansController extends AppController {
 		if($semester_id!=null && $semester_id!='null' ) $condition['conditions']['semester_id']=$semester_id;
 		if($course_id!=null && $course_id!='null') $condition['conditions']['course_id']=$course_id;
 		if($course_type!=null && $course_type!='null') $condition['conditions']['CoursePlan.course_type']=$course_type;
+		if($score_type!=null && $score_type!='null') $condition['conditions']['CoursePlan.score_type']=$score_type;
 // 		debug($condition);
 		$condition['order']='course_id';
 		$coursePlans=$this->CoursePlan->find('all',$condition);

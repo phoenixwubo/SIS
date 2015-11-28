@@ -28,13 +28,10 @@ Ext.define('SIS.view.score.SearchResult' ,{
 		
         this.columns = [
 //            {header: 'ID',  dataIndex: 'id',  flex: 1}, 
-            {header:'学期'},
-            {header: '课程名称',  dataIndex: 'course_plan_id',  flex: 1,
-            	renderer : function(value, metaData, record) { // #2
-					var coursePlansStore = Ext.getStore('coursePlans.CoursePlanLists');
-					var courseinfo = coursePlansStore.findRecord('id', value);
-					return courseinfo != null ? courseinfo.get('course_info') : value;
-				}},            
+            {header:'学期',dataIndex: 'sem_name',flex: 2},
+            {header:'年级',dataIndex:'dept_name',  flex: 1},
+            {header:'姓名',dataIndex:'stu_name',  flex: 1},
+            {header: '课程名称',  dataIndex: 'course_name',  flex: 1},            
             {header: '学号',  dataIndex: 'stu_number',  flex: 1},
 //            {header: '姓名',dataIndex: 'stu_number',
 //            	renderer : function(value, metaData, record) { // #2

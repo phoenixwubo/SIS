@@ -415,7 +415,7 @@ Ext.define('SIS.controller.Scores', {
 		             {header: '姓名',dataIndex: 'stu_name'}];
         	grid=button.up('panel').down('grid');
         	grid.setTitle(semester+department+course+exam+'成绩表');
-        	var newUrl='courseplans/listCoursePlans/'+department_id+'/'+semester_id+'/'+course_id+'/';
+        	var newUrl='courseplans/listCoursePlans/'+department_id+'/'+semester_id+'/'+course_id+'/'+'1/null/1';
         	Ext.Ajax.request({
         		url:newUrl,
         		success: function(response){

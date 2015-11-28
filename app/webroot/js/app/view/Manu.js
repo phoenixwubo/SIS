@@ -1,4 +1,4 @@
-Ext.define('SIS.view.Manu', {					
+	Ext.define('SIS.view.Manu', {					
 	extend : 'Ext.panel.Panel',
 	layout: 'accordion',
 	defaults: {

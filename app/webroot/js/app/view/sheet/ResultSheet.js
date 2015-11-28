@@ -15,7 +15,7 @@ Ext.define('SIS.view.sheet.ResultSheet' ,{
     	id: 'stu_number',
         fieldLabel: '学号'
         },{xtype: 'button',
-            text : '搜索',
+            text : '查询',
             id:'search'
         },]}],
     items: [

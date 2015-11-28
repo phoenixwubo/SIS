@@ -42,16 +42,23 @@ Ext.define('SIS.view.elective.SearchResult' ,{
     initComponent: function() {
     	this.columns = [
 //    	                     {header: 'ID',  dataIndex: 'id',  flex: 1},  
-    	                     {header: '学期',  dataIndex: 'sem_name',  flex: 1},
+    	                     {header: '学期',  dataIndex: 'semester_id',  flex: 2,
+    	                    	 renderer : function(value, metaData, record) { 
+ 									var semesterStore = Ext.getStore('Semesters');
+ 									var semester = semesterStore.findRecord('id', value);
+ 									return semester != null ? semester.get('sem_name') :value;
+ 								}},
+//    	                     {header: '年级',  dataIndex: 'dept_name',  flex: 1},,
 //    	                     {header: '课时序号',  dataIndex: 'lesson_number',  flex: 1},
-    	                     {header: '课程名称',  dataIndex: 'course_id',  flex: 1,
+    	                      {header: '课程类型', dataIndex: 'course_type', flex: 1,renderer:this.renderCourseType},
+    	                      {header: '课程名称',  dataIndex: 'course_id',  flex: 1,
     	                    	 renderer : function(value, metaData, record) { 
     									var coursesStore = Ext.getStore('Courses');
     									var course = coursesStore.findRecord('id', value);
     									return course != null ? course.get('course_name') : value==0 ? "<span style='color:red;'>未选择</span>":value;
     								}
     	                    	 },
-	                    	 {header: '课程类型', dataIndex: 'course_type', flex: 1,renderer:this.renderCourseType},
+	                    	
     	                     {header: '学号',  dataIndex: 'stu_number',  flex: 1},
     	                     {header: '姓名',  dataIndex: 'stu_name',  flex: 1},
     	                     {header:'成绩',dataIndex:'result',

@@ -470,7 +470,7 @@ class ScoresController extends AppController {
 				'action' => 'index' 
 		) );
 	}
-	// /查找学生的所有学习记录
+	// /查找学生的所有学习记录,显示详细信息
 	public function listResults() {
 		$this->layout = 'ajax';
 		if (isset ( $this->request->query ['stu_number'] )) {
@@ -478,20 +478,52 @@ class ScoresController extends AppController {
 		} else {
 			// $stu_numbers='201420102';
 			die ();
-		}
+		}		
+		
+		
 		
 		if (isset ( $stu_numbers )) {
-			// App::import('Controller','Students');
-			// $Student=new StudentsController();
+			App::import('Controller','CoursePlans');
+			$CoursePlan=new CoursePlansController();
+			$allCoursePlans=$CoursePlan->listAllCoursePlans(1);
+			
+			App::import('Controller','Students');
+			$Student=new StudentsController();
+// 			$electives=$this->Elective->find('all' ,array(
+// 					'conditions'=>array(
+// 							'elective.stu_number'=>$Student->stuNumbers($stu_numbers)
+// 							// 								'elective.stu_number'=>$stu_numbers
+// 					)
+// 			)
+// 			);
+// 			debug($allCoursePlans);
 			$scores = $this->Score->find ( 'all', array (
 					'conditions' => array (
-							'Score.stu_number' => $stu_numbers 
+							'Score.stu_number' => $Student->stuNumbers($stu_numbers) 
 					)
 					// 'stu_number'=>$Student->stuNumbers($stu_numbers)
 					 
 			) );
-			
-			$this->set ( 'scores', $scores );
+			$Compound_scores=array();
+			$idx=0;
+			foreach ($scores as $score){
+// 				debug($score);
+			foreach ($allCoursePlans as $oneCoursePlan){
+				if($score['CoursePlan']['id']==$oneCoursePlan['CoursePlan']['id']){
+					$Compound_scores[$idx]['CoursePlan']=$oneCoursePlan['CoursePlan'];
+					$Compound_scores[$idx]['Score']=$score['Score'];
+					$Compound_scores[$idx]['Student']=$score['Student'];
+					$Compound_scores[$idx]['Course']=$oneCoursePlan['Course'];
+					$Compound_scores[$idx]['Semester']=$oneCoursePlan['Semester'];
+					$Compound_scores[$idx]['Semester']=$oneCoursePlan['Semester'];
+					$Compound_scores[$idx]['Department']=$oneCoursePlan['Department'];
+				}
+
+			}			$idx++;
+			}				
+
+// 			debug($Compound_scores);
+			$this->set ( 'scores', $Compound_scores );
 		}
 	}
 	//
