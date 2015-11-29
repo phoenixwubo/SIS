@@ -28,16 +28,31 @@ Ext.define('SIS.controller.Departments', {
 			},
 			'editdepartment button[action=update]' : {
 				click : this.updateDepartment
-			}/*,
+			},
 			'departmentTree':{
-				beforeload:this.DepartmentLoad
-			}*/
+//				beforeload:this.DepartmentLoad,
+//				beforerender:this.onDepartmentTreeRender
+			},
+			'departmentpanel':{
+				beforerender:this.onDepartmentPanelRender
+			},
+			'departmentpanel button#upward' : {
+				click : this.onButtonClickUpwardDepartment
+			},
+			'departmentpanel button#downward' : {
+				click : this.onButtonClickDownwardDepartment
+			},
 
 		})
 	},
+	onDepartmentTreeRender:function(panel){
+		departmenttree=panel;
+		console.log(panel);
+		
+	},
 	onItemClick : function(view, record, item, index, event, options) {
 		id = record.get('text');
-		console.log('节点被击中了！', id);
+		console.log('节点被点击了！', id);
 
 	/*	store = view.up('mainviewport').down('studentlist')
 				.getStore('Students');
@@ -228,14 +243,132 @@ Ext.define('SIS.controller.Departments', {
 
 		}
 	},
-	DepartmentLoad:function(){
-		console.log('渲染之前');
-		var departmentListStore = Ext.getStore('departments.DepartmentsList');
-		console.log(departmentListStore);
-		departmentListStore.reload();
+	DepartmentLoad:function(store){
+		console.log('渲染之前',store);
+		
+//		var departmentListStore = Ext.getStore('departments.DepartmentsList');
+//		console.log(departmentListStore);
+//		departmentListStore.reload();
+//		treeStore = this.getDepartmentTree().getView().getTreeStore();  
+//		//console.log(treeStore);
+//		treeStore.load();
+	},
+	onDepartmentTreeRender:function(panel){
+		console.log('渲染之前',panel)
+		
+	},
+	onDepartmentPanelRender:function(panel){
+		var toolbar=panel.down('toolbar');
+		var upButton=new Ext.Button({text:'向上移',itemId:'upward',iconCls:'upward'});
+		var downButton=new Ext.Button({text:'向下移',itemId:'downward',iconCls:'downward'});
+		toolbar.add(upButton);
+		toolbar.add(downButton);
+		
+
+	},
+	onButtonClickUpwardDepartment:function()
+	{
+
+		treeModel=this.getDepartmentTree().getSelectionModel();
+		
+		if(treeModel.getSelection().length==0){
+			alert('请选择一项');
+		}
+		else{	
+		data = treeModel.getSelection()[0].data;
+		id=data.id;
+		
+		
+		console.log(id);
+		
+	
+		Ext.MessageBox.confirm('调整','确定要将'+data.text+'上移？',function(btn){
+			if(btn == 'yes'){
+				Ext.Ajax.request({
+					url:'/departments/moveup/'+id+'/1',
+				method:'POST',
+				params:id,
+				
+				callback:function(option,success,response){
+					if(success){
+						
+						alert('成功！');
+						//this.DepartmentLoad();
+		
+						
+					}else{
+						Ext.Msg.show({
+					           title:'Error!',
+					           msg: response.responseText,
+					           icon: Ext.Msg.ERROR,
+					           buttons: Ext.Msg.OK
+					});			
+					}
+				}
+				});
+
+			}
+		});
 		treeStore = this.getDepartmentTree().getView().getTreeStore();  
 		//console.log(treeStore);
 		treeStore.load();
+
+
+		}
+	
+	},
+	onButtonClickDownwardDepartment:function()
+	{
+
+		treeModel=this.getDepartmentTree().getSelectionModel();
+		
+		if(treeModel.getSelection().length==0){
+			alert('请选择一项');
+		}
+		else{	
+		data = treeModel.getSelection()[0].data;
+		id=data.id;
+		
+		
+		console.log(id);
+		
+	
+		Ext.MessageBox.confirm('调整','确定要将'+data.text+'下移？',function(btn){
+			if(btn == 'yes'){
+				Ext.Ajax.request({
+					url:'/departments/movedown/'+id+'/1',
+				method:'POST',
+				params:id,
+				
+				callback:function(option,success,response){
+					if(success){
+						
+						alert('成功！');
+						//this.DepartmentLoad();
+		
+						
+					}else{
+						Ext.Msg.show({
+					           title:'Error!',
+					           msg: response.responseText,
+					           icon: Ext.Msg.ERROR,
+					           buttons: Ext.Msg.OK
+					});			
+					}
+				}
+				});
+
+			}
+		});
+		treeStore = this.getDepartmentTree().getView().getTreeStore();  
+		//console.log(treeStore);
+		treeStore.load();
+
+
+		}
+	
 	}
 
+
+	
 })

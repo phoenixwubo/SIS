@@ -101,3 +101,9 @@ font-family:'Lucida Grande', Arial, Sans;
 .import{
 	background-image: url('../images/import.png');
 	}
+.upward{
+	background-image: url('../images/arrow_up.png');
+	}
+.downward{
+	background-image: url('../images/arrow_down.png');
+	}
