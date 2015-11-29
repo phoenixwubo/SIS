@@ -2,7 +2,7 @@ Ext.define('SIS.view.department.Tree',{
 	extend:'Ext.tree.Panel',
 	alias:'widget.departmentTree',
 	border:false,
-	title:'组织管理',
+	title:'班级管理',
 /*	tbar: [{
         text: '展开',
         id:'expand',
