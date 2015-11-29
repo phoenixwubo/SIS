@@ -152,14 +152,14 @@
 					leaf:true
 					
 				},{			
-					text:'组织机构管理',
+					text:'班级管理',
 					iconCls:'departments',
 					id:'departmentpanel',
 					leaf:true
-				},{
+				}/*,{
 					text:'权限管理',
 					leaf:true
-				}]
+				}*/]
     		}
     	}
 		]
