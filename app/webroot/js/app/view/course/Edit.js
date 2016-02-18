@@ -3,7 +3,7 @@ Ext.define('SIS.view.course.Edit', {
     extend: 'Ext.window.Window',
     alias: 'widget.editcourse',
 
-    title: '修改课程',
+    title: '修改学科',
     layout: 'fit',
     autoShow: true,
     modal: true,

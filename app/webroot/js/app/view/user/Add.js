@@ -3,7 +3,7 @@ Ext.define('SIS.view.user.Add', {
     extend: 'Ext.window.Window',
     alias: 'widget.useradd',
 
-    title: '添加成员',
+    title: '添加用户',
     layout: 'fit',
     autoShow: true,
     modal: true,

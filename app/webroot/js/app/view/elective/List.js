@@ -40,7 +40,7 @@ Ext.define('SIS.view.elective.List' ,{
     	                    
     	                     {header: '学号',  dataIndex: 'stu_number',  flex: 1},
     	                     {header: '姓名',  dataIndex: 'stu_name',  flex: 1},
-    	                      {header: '课程名称',  dataIndex: 'course_id',  flex: 1,
+    	                      {header: '选修名称',  dataIndex: 'course_id',  flex: 1,
     	                    	 renderer : function(value, metaData, record) { 
     									var coursesStore = Ext.getStore('courses.CoursesList');
     									var course = coursesStore.findRecord('id', value);

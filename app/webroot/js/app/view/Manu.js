@@ -44,7 +44,7 @@
     		id:'course',
     		root:{
     			children:[{
-    				text:'课程目录',
+    				text:'学科管理',
     				leaf:true,
     				id:'courselist'
     			},{
@@ -64,7 +64,7 @@
     				
     			},*/
     			{
-    				text:'选修课学生名单',
+    				text:'选修课管理',
     				leaf:true,
     				id:'electivelist'
     			}]
@@ -77,7 +77,7 @@
 	        rootVisible:false,
 	        root:{
 				children:[{
-					text:'考试成绩录入修改',
+					text:'考试成绩管理',
 					leaf:true,
 					id:'subjectscorelist'
 				},
@@ -92,7 +92,7 @@
 					id:'noexamresultlist'
 				}				
 				*/,{
-					text:'考查科目成绩录入修改',
+					text:'考查学科成绩管理',
 					leaf:true,
 					id:'electiveresultlist'
 				},{

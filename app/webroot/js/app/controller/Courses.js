@@ -142,7 +142,7 @@ Ext.define('SIS.controller.Courses', {
         	else{
         		console.log(sm.getSelection()[0].data.id);
         		
-        		Ext.MessageBox.confirm('删除记录','确定要删除'+sm.getSelection()[0].data.course_name+'？',function(btn){
+        		Ext.MessageBox.confirm('删除学科','确定要删除'+sm.getSelection()[0].data.course_name+'？',function(btn){
         			if(btn == 'yes'){
     					store.remove(sm.getSelection());
     					store.sync({

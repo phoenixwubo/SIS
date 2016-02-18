@@ -41,8 +41,10 @@ Ext.define('SIS.view.elective.ResultList' ,{
 	      ],
     initComponent: function() {
     	this.columns = [
-    	                     {header: 'ID',  dataIndex: 'id'},  
-    	                     {header: '学期',  dataIndex: 'semester_id',  flex: 1,
+    	                    // {header: 'ID',  dataIndex: 'id'},  
+    	                    {header: '姓名',  dataIndex: 'stu_name',  flex: 1},
+    	                       {header: '学号',  dataIndex: 'stu_number',  flex: 1},
+    	                    {header: '学期',  dataIndex: 'semester_id',  flex: 1,
  								renderer : function(value, metaData, record) { // #2
  									var semestersStore = Ext.getStore('Semesters');
  									var semester = semestersStore.findRecord('id', value);
@@ -57,8 +59,6 @@ Ext.define('SIS.view.elective.ResultList' ,{
     								}
     	                    	 },
 	                    	 {header: '课程类型', dataIndex: 'course_type', flex: 1,renderer:this.renderCourseType},
-    	                     {header: '学号',  dataIndex: 'stu_number',  flex: 1},
-    	                     {header: '姓名',  dataIndex: 'stu_name',  flex: 1},
     	                     {header:'成绩',dataIndex:'result',
     	                    	 renderer : function(value, metaData, record) { 
  									var coursesStore = Ext.getStore('ResultTypes');

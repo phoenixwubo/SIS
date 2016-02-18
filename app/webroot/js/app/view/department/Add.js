@@ -3,7 +3,7 @@ Ext.define('SIS.view.department.Add', {
     extend: 'Ext.window.Window',
     alias: 'widget.adddepartment',
 
-    title: '添加机构',
+    title: '添加班级',
     layout: 'fit',
     autoShow: true,
     modal: true,

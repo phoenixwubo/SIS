@@ -3,7 +3,7 @@ Ext.define('SIS.view.user.Edit', {
     extend: 'Ext.window.Window',
     alias: 'widget.useredit',
 
-    title: 'Edit User',
+    title: '编辑用户',
     layout: 'fit',
     autoShow: true,
     modal: true,

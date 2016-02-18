@@ -5,7 +5,7 @@ Ext.define('SIS.view.course.List' ,{
     extend: 'Ext.grid.Panel',
     alias: 'widget.courselist',
    
-    title: '课程目录',
+    title: '学科目录',
     store:'Courses',
     stripeRows: true,
     renderScoreType:function(value){
@@ -43,7 +43,7 @@ Ext.define('SIS.view.course.List' ,{
     initComponent: function() {
         this.columns = [
                         {header: 'ID',  dataIndex: 'id',  flex: 1},            
-                        {header: '课程名称',  dataIndex: 'course_name',  flex: 1},
+                        {header: '学科名称',  dataIndex: 'course_name',  flex: 1},
 				        {
 							header : '负责教师',
 							dataIndex : 'user_id',

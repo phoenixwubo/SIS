@@ -2,7 +2,7 @@ Ext.define('SIS.view.course.Add', {
 	extend : 'Ext.window.Window',
 	alias : 'widget.addcourse',
 
-	title : '添加课程',
+	title : '添加学科',
 	layout : 'fit',
 	autoShow : true,
 	modal: true,

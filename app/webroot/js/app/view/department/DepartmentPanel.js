@@ -13,7 +13,7 @@ Ext.define('SIS.view.department.DepartmentPanel',{
 	       {
 	    	   xtype:'departmentTree',
 	    	   region:'west',
-	    	   width:150
+	    	   width:400
 	       }
 	       ]
 });
